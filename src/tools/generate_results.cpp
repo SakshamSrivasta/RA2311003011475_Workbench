@@ -91,13 +91,14 @@ void feaStudy() {
     conv.xLabel = "Element size h (m)";
     conv.yLabel = "Max |T_FE - T_exact| at midpoints (C)";
     conv.logX = conv.logY = true;
+    conv.legendTopLeft = true;
     Series measured{"FE midpoint error", {}, {}, kBlue, false, true, true};
     Series theory{"Theory q h^2 / (8k)", {}, {}, kInkMuted, true, false, true};
     for (const auto& r : fea::convergenceStudy(base, counts)) {
         measured.x.push_back(r.elementSize_m);
         measured.y.push_back(r.maxMidpointError_C);
     }
-    for (double h : {0.2, 0.1, 0.05, 0.025, 0.0125, 0.008}) {
+    for (double h : {0.1, 0.05, 0.025, 0.0125}) {
         theory.x.push_back(h);
         theory.y.push_back(base.heatGeneration_W_m3 * h * h / (8 * base.conductivity_W_mK));
     }
@@ -141,6 +142,8 @@ void benchmarkStudy(int cases, int elements) {
                     sys.cpuName;
     plot.xLabel = "Worker threads p";
     plot.yLabel = "Speedup T1 / Tp";
+    plot.integerX = true;
+    plot.legendTopLeft = true;
     Series measured{"Measured", {}, {}, kBlue, false, true, true};
     Series ideal{"Ideal (= p)", {}, {}, kInkMuted, true, false, true};
     for (const auto& r : rep.parallel) {

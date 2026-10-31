@@ -1,0 +1,32 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='760' height='460' viewBox='0 0 760 460' font-family='Segoe UI, Helvetica, Arial, sans-serif'>
+<rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='78' y='26' font-size='17' font-weight='600' fill='#0b0b0b'>Mesh convergence: max midpoint error</text>
+<text x='78' y='46' font-size='12.5' fill='#52514e'>Slope 2 on log-log axes = second-order convergence; dashed line is q h^2 / (8k)</text>
+<line x1='78' x2='78' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='78' y='416' font-size='12' fill='#52514e' text-anchor='middle'>0.01</text>
+<line x1='736' x2='736' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='736' y='416' font-size='12' fill='#52514e' text-anchor='middle'>0.1</text>
+<line x1='78' x2='736' y1='398' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='402' font-size='12' fill='#52514e' text-anchor='end'>0.01</text>
+<line x1='78' x2='736' y1='288.667' y2='288.667' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='292.667' font-size='12' fill='#52514e' text-anchor='end'>0.1</text>
+<line x1='78' x2='736' y1='179.333' y2='179.333' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='183.333' font-size='12' fill='#52514e' text-anchor='end'>1</text>
+<line x1='78' x2='736' y1='70' y2='70' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='74' font-size='12' fill='#52514e' text-anchor='end'>10</text>
+<line x1='78' x2='736' y1='398' y2='398' stroke='#8a8984' stroke-width='1'/>
+<text x='407' y='442' font-size='13' fill='#0b0b0b' text-anchor='middle'>Element size h (m)</text>
+<text transform='translate(18,234) rotate(-90)' font-size='13' fill='#0b0b0b' text-anchor='middle'>Max |T_FE - T_exact| at midpoints (C)</text>
+<polyline fill='none' stroke='#2a78d6' stroke-width='2' stroke-linejoin='round' points='736,168.738 537.922,234.563 339.845,300.388 141.767,366.214 '/>
+<circle cx='736' cy='168.738' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='537.922' cy='234.563' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='339.845' cy='300.388' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='141.767' cy='366.214' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#52514e' stroke-width='2' stroke-linejoin='round' stroke-dasharray='6 4' points='736,168.738 537.922,234.563 339.845,300.388 141.767,366.214 '/>
+<rect x='86' y='78' width='165.4' height='50' fill='#fcfcfb' fill-opacity='0.92' stroke='#e6e5e0' rx='4'/>
+<line x1='94' x2='116' y1='92' y2='92' stroke='#2a78d6' stroke-width='2'/>
+<circle cx='105' cy='92' r='4' fill='#2a78d6'/>
+<text x='122' y='96' font-size='12' fill='#0b0b0b'>FE midpoint error</text>
+<line x1='94' x2='116' y1='112' y2='112' stroke='#52514e' stroke-width='2' stroke-dasharray='6 4'/>
+<text x='122' y='116' font-size='12' fill='#0b0b0b'>Theory q h^2 / (8k)</text>
+</svg>

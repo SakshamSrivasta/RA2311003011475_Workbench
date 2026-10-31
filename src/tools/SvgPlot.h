@@ -24,6 +24,8 @@ struct Series {
 struct PlotSpec {
     std::string title, subtitle, xLabel, yLabel;
     bool logX = false, logY = false;
+    bool integerX = false;       // whole-number x ticks only (e.g. worker counts)
+    bool legendTopLeft = false;  // default is top-right; pick whichever corner the data leaves empty
     std::vector<Series> series;
     int width = 760, height = 460;
 };
@@ -114,7 +116,10 @@ inline std::string renderSvg(const PlotSpec& spec) {
     }
 
     // Grid and ticks - kept light so the data reads first.
-    const auto xt = spec.logX ? logTicks(xmin, xmax) : linearTicks(xmin, xmax);
+    auto xt = spec.logX ? logTicks(xmin, xmax) : linearTicks(xmin, xmax);
+    if (spec.integerX) {
+        xt.erase(std::remove_if(xt.begin(), xt.end(), [](double v) { return v != std::round(v); }), xt.end());
+    }
     const auto yt = spec.logY ? logTicks(ymin, ymax) : linearTicks(ymin, ymax);
     for (double v : xt) {
         o << "<line x1='" << tx(v) << "' x2='" << tx(v) << "' y1='" << top << "' y2='" << top + ph
@@ -159,7 +164,7 @@ inline std::string renderSvg(const PlotSpec& spec) {
         std::size_t longest = 0;
         for (const auto& s : spec.series) longest = std::max(longest, s.label.size());
         const double lw = 40 + 6.6 * static_cast<double>(longest), lh = 20.0 * static_cast<double>(spec.series.size()) + 10;
-        const double lx = left + pw - lw - 8, ly = top + 8;
+        const double lx = spec.legendTopLeft ? left + 8 : left + pw - lw - 8, ly = top + 8;
         o << "<rect x='" << lx << "' y='" << ly << "' width='" << lw << "' height='" << lh
           << "' fill='#fcfcfb' fill-opacity='0.92' stroke='#e6e5e0' rx='4'/>\n";
         for (std::size_t i = 0; i < spec.series.size(); ++i) {

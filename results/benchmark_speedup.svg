@@ -1,0 +1,36 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='760' height='460' viewBox='0 0 760 460' font-family='Segoe UI, Helvetica, Arial, sans-serif'>
+<rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='78' y='26' font-size='17' font-weight='600' fill='#0b0b0b'>Batch solve speedup vs worker threads</text>
+<text x='78' y='46' font-size='12.5' fill='#52514e'>1000 rods x 10000 elements, median of 5 runs, Apple M2</text>
+<line x1='78' x2='78' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='78' y='416' font-size='12' fill='#52514e' text-anchor='middle'>1</text>
+<line x1='297.333' x2='297.333' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='297.333' y='416' font-size='12' fill='#52514e' text-anchor='middle'>2</text>
+<line x1='516.667' x2='516.667' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='516.667' y='416' font-size='12' fill='#52514e' text-anchor='middle'>3</text>
+<line x1='736' x2='736' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='736' y='416' font-size='12' fill='#52514e' text-anchor='middle'>4</text>
+<line x1='78' x2='736' y1='383.091' y2='383.091' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='387.091' font-size='12' fill='#52514e' text-anchor='end'>1</text>
+<line x1='78' x2='736' y1='283.697' y2='283.697' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='287.697' font-size='12' fill='#52514e' text-anchor='end'>2</text>
+<line x1='78' x2='736' y1='184.303' y2='184.303' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='188.303' font-size='12' fill='#52514e' text-anchor='end'>3</text>
+<line x1='78' x2='736' y1='84.9091' y2='84.9091' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='88.9091' font-size='12' fill='#52514e' text-anchor='end'>4</text>
+<line x1='78' x2='736' y1='398' y2='398' stroke='#8a8984' stroke-width='1'/>
+<text x='407' y='442' font-size='13' fill='#0b0b0b' text-anchor='middle'>Worker threads p</text>
+<text transform='translate(18,234) rotate(-90)' font-size='13' fill='#0b0b0b' text-anchor='middle'>Speedup T1 / Tp</text>
+<polyline fill='none' stroke='#2a78d6' stroke-width='2' stroke-linejoin='round' points='78,383.091 297.333,285.483 516.667,198.803 736,106.355 '/>
+<circle cx='78' cy='383.091' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='297.333' cy='285.483' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='516.667' cy='198.803' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='736' cy='106.355' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#52514e' stroke-width='2' stroke-linejoin='round' stroke-dasharray='6 4' points='78,383.091 297.333,283.697 516.667,184.303 736,84.9091 '/>
+<rect x='86' y='78' width='112.6' height='50' fill='#fcfcfb' fill-opacity='0.92' stroke='#e6e5e0' rx='4'/>
+<line x1='94' x2='116' y1='92' y2='92' stroke='#2a78d6' stroke-width='2'/>
+<circle cx='105' cy='92' r='4' fill='#2a78d6'/>
+<text x='122' y='96' font-size='12' fill='#0b0b0b'>Measured</text>
+<line x1='94' x2='116' y1='112' y2='112' stroke='#52514e' stroke-width='2' stroke-dasharray='6 4'/>
+<text x='122' y='116' font-size='12' fill='#0b0b0b'>Ideal (= p)</text>
+</svg>
