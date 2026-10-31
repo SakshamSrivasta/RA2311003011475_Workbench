@@ -59,6 +59,7 @@ add_library(wb_core STATIC
     src/core/io/NodalCsvReader.cpp
     src/core/hardware/MockAdapters.cpp
     src/core/hardware/DeviceManager.cpp
+    src/core/report/Exports.cpp
 )
 target_include_directories(wb_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(wb_core PUBLIC Threads::Threads PRIVATE wb_options)
@@ -68,6 +69,45 @@ target_compile_definitions(wb_core PRIVATE
 if(WIN32)
     target_link_libraries(wb_core PRIVATE advapi32)  # RegGetValueA in SystemInfo
 endif()
+
+# ---------------------------------------------------------------------------
+# Vendored header-only libraries (see docs/DEPENDENCIES.md for versions).
+# Marked SYSTEM so their warnings don't drown ours.
+# ---------------------------------------------------------------------------
+add_library(wb_thirdparty INTERFACE)
+target_include_directories(wb_thirdparty SYSTEM INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/httplib
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party)  # <nlohmann/json.hpp>
+
+# ---------------------------------------------------------------------------
+# Launch: local web server + browser UI. Transport/presentation only - all
+# computation is in wb_core.
+# ---------------------------------------------------------------------------
+add_executable(Launch
+    src/app/main.cpp
+    src/app/Platform.cpp
+    src/app/JobManager.cpp
+    src/app/StaticFiles.cpp
+    src/app/routes/SystemRoutes.cpp
+    src/app/routes/GeometryRoutes.cpp
+    src/app/routes/ThermalRoutes.cpp
+    src/app/routes/PerformanceRoutes.cpp
+    src/app/routes/HardwareRoutes.cpp
+    src/app/routes/BackpropRoutes.cpp
+)
+target_include_directories(Launch PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(Launch PRIVATE wb_core wb_thirdparty wb_options)
+if(WIN32)
+    # Windows 10+ APIs (httplib requires them); sockets and ShellExecute.
+    target_compile_definitions(Launch PRIVATE _WIN32_WINNT=0x0A00 WINVER=0x0A00 NOMINMAX WIN32_LEAN_AND_MEAN)
+    target_link_libraries(Launch PRIVATE ws2_32 shell32)
+endif()
+
+# Developer tools: example-data and results generators.
+add_executable(wb_make_sample_data src/tools/make_sample_data.cpp)
+target_link_libraries(wb_make_sample_data PRIVATE wb_core wb_options)
+add_executable(wb_results src/tools/generate_results.cpp)
+target_link_libraries(wb_results PRIVATE wb_core wb_options)
 
 # ---------------------------------------------------------------------------
 # Unit tests: one executable, run through CTest.
