@@ -54,6 +54,11 @@ add_library(wb_core STATIC
     src/core/batch/Benchmark.cpp
     src/core/ml/Backprop.cpp
     src/core/platform/SystemInfo.cpp
+    src/core/io/TextFile.cpp
+    src/core/io/StlReader.cpp
+    src/core/io/NodalCsvReader.cpp
+    src/core/hardware/MockAdapters.cpp
+    src/core/hardware/DeviceManager.cpp
 )
 target_include_directories(wb_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(wb_core PUBLIC Threads::Threads PRIVATE wb_options)
@@ -65,8 +70,18 @@ if(WIN32)
 endif()
 
 # ---------------------------------------------------------------------------
-# Tests (added in the next step) and the application/launcher (added later).
+# Unit tests: one executable, run through CTest.
 # ---------------------------------------------------------------------------
 if(WB_BUILD_TESTS)
     enable_testing()
+    add_executable(wb_tests
+        tests/test_main.cpp
+        tests/test_fea.cpp
+        tests/test_backprop.cpp
+        tests/test_batch.cpp
+        tests/test_io.cpp
+        tests/test_hardware.cpp
+    )
+    target_link_libraries(wb_tests PRIVATE wb_core wb_options)
+    add_test(NAME wb_tests COMMAND wb_tests)
 endif()
