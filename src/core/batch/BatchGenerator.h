@@ -26,6 +26,9 @@ struct BatchConfig {
 };
 
 constexpr int kMaxBatchCases = 100'000;
+// Each run keeps cases x (elements + 1) doubles; the benchmark holds up to three
+// such results at once. 20M values = 160 MB per result.
+constexpr long long kMaxBatchValues = 20'000'000;
 
 // Throws WorkbenchError(InvalidParameter) on a bad configuration.
 void validate(const BatchConfig& config);

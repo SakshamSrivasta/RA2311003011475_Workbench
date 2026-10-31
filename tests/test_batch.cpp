@@ -119,6 +119,10 @@ TEST(batch_rejects_bad_config) {
     c.maxHeatGeneration_W_m3 = 1e3;
     CHECK_THROWS_CODE(generateBatch(c), ErrorCode::InvalidParameter);
     CHECK_THROWS_CODE(runParallel(generateBatch(smallConfig()), 0), ErrorCode::InvalidParameter);
+    c = smallConfig();
+    c.caseCount = 100'000;
+    c.elementsPerCase = 1000;  // 100M values, over the memory guard
+    CHECK_THROWS_CODE(generateBatch(c), ErrorCode::InvalidParameter);
 }
 
 TEST(benchmark_worker_counts_are_capped) {

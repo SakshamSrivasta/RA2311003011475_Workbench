@@ -36,6 +36,14 @@ void validate(const BatchConfig& c) {
     fea::RodProblem probe;
     probe.elements = c.elementsPerCase;
     fea::validate(probe);  // reuses the element-count check and message
+    const long long values = static_cast<long long>(c.caseCount) * (static_cast<long long>(c.elementsPerCase) + 1);
+    if (values > kMaxBatchValues) {
+        std::ostringstream msg;
+        msg << "Batch is too large: " << c.caseCount << " cases x " << c.elementsPerCase << " elements needs about "
+            << values * 8 / (1024 * 1024) << " MB per run (limit " << kMaxBatchValues * 8 / (1024 * 1024)
+            << " MB). Reduce the case count or mesh size.";
+        throw WorkbenchError(ErrorCode::InvalidParameter, msg.str());
+    }
     requireRange(c.minConductivity_W_mK, c.maxConductivity_W_mK, "Conductivity k", "W/(m K)");
     requireRange(c.minHeatGeneration_W_m3, c.maxHeatGeneration_W_m3, "Heat generation q", "W/m^3");
 }

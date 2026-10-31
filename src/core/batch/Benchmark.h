@@ -27,8 +27,8 @@ struct TimingRow {
     unsigned workers = 0;              // 0 marks the plain serial loop
     std::vector<double> runs_s;        // each measured run, in seconds
     double median_s = 0.0;
-    double speedup = 0.0;              // T1 / Tp, T1 = pool with one worker
-    double efficiency = 0.0;           // speedup / p
+    double speedup = 0.0;              // T1 / Tp, T1 = pool with one worker (unset for the serial row)
+    double efficiency = 0.0;           // speedup / p (unset for the serial row)
     double maxAbsDiffVsSerial_C = 0.0; // agreement with the serial result
 };
 

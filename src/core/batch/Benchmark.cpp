@@ -76,8 +76,6 @@ BenchmarkReport runBenchmark(const BenchmarkConfig& config, const CancelToken* c
         row.speedup = row.median_s > 0.0 ? t1 / row.median_s : 0.0;
         row.efficiency = row.speedup / row.workers;
     }
-    report.serial.speedup = report.serial.median_s > 0.0 ? t1 / report.serial.median_s : 0.0;
-    report.serial.efficiency = report.serial.speedup;
     return report;
 }
 
