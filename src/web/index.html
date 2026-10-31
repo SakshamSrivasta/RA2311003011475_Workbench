@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Engineering Workbench</title>
+  <link rel="stylesheet" href="css/app.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three/three.module.min.js",
+        "three/addons/": "./vendor/three/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <div class="brand-title">Unified Engineering Workbench</div>
+        <div class="brand-sub">C++17 core · local only · RA2311003011475</div>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-view="geometry" aria-selected="true">Geometry</button>
+      <button role="tab" data-view="thermal">Thermal Analysis</button>
+      <button role="tab" data-view="performance">Performance</button>
+      <button role="tab" data-view="hardware">Hardware</button>
+      <button role="tab" data-view="backprop">Backprop</button>
+    </nav>
+    <div class="topbar-right">
+      <span id="backend-pill" class="pill pill-wait">Connecting…</span>
+      <button id="theme-toggle" class="btn btn-ghost" title="Switch light/dark">Theme</button>
+      <button id="quit-btn" class="btn btn-ghost" title="Stop the local server">Quit</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== Geometry ===================== -->
+    <section class="view" id="view-geometry" data-active>
+      <aside class="sidebar">
+        <div class="card">
+          <h2><span class="step">1</span> CAD geometry <small>ASCII STL</small></h2>
+          <label class="file-drop">
+            <input type="file" id="stl-file" accept=".stl">
+            <span>Choose STL file…</span>
+          </label>
+          <div class="row">
+            <button class="btn" id="stl-example">Load example heat sink</button>
+          </div>
+          <label class="field">
+            <span>STL units <small>(STL files carry no units)</small></span>
+            <select id="stl-units">
+              <option value="0.001" selected>millimetres</option>
+              <option value="1">metres</option>
+              <option value="0.0254">inches</option>
+            </select>
+          </label>
+          <div class="msg" id="stl-msg" role="status"></div>
+          <dl class="facts" id="stl-facts"></dl>
+        </div>
+
+        <div class="card">
+          <h2><span class="step">2</span> Nodal temperatures <small>ANSYS-style CSV</small></h2>
+          <p class="hint">Columns: <code>node_id,x_m,y_m,z_m,temperature_C</code></p>
+          <label class="file-drop">
+            <input type="file" id="csv-file" accept=".csv,.txt">
+            <span>Choose CSV file…</span>
+          </label>
+          <div class="row">
+            <button class="btn" id="csv-example">Load example (synthetic)</button>
+          </div>
+          <div class="msg" id="csv-msg" role="status"></div>
+          <dl class="facts" id="csv-facts"></dl>
+        </div>
+
+        <div class="card" id="node-card" hidden>
+          <h2>Selected node</h2>
+          <dl class="facts" id="node-facts"></dl>
+        </div>
+      </aside>
+
+      <div class="content">
+        <div class="viewer-toolbar">
+          <button class="btn" id="v-fit">Fit to view</button>
+          <label class="check"><input type="checkbox" id="v-mesh" checked> Mesh</label>
+          <label class="check"><input type="checkbox" id="v-wire"> Wireframe</label>
+          <label class="check"><input type="checkbox" id="v-points" checked> Nodes</label>
+          <label class="check slider">Node size <input type="range" id="v-size" min="1" max="10" value="4"></label>
+          <span class="toolbar-hint">Drag: rotate · Right-drag / Shift-drag: pan · Wheel: zoom · Hover a node to inspect</span>
+        </div>
+        <div class="viewer" id="viewer">
+          <div class="viewer-empty" id="viewer-empty">Load an STL or a nodal CSV to see it here.</div>
+          <div class="legend" id="temp-legend" hidden>
+            <div class="legend-title">Temperature (°C)</div>
+            <div class="legend-body">
+              <div class="legend-bar" id="legend-bar"></div>
+              <div class="legend-ticks" id="legend-ticks"></div>
+            </div>
+          </div>
+          <div class="tooltip" id="node-tip" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Thermal ===================== -->
+    <section class="view" id="view-thermal">
+      <aside class="sidebar">
+        <form class="card" id="fea-form" novalidate>
+          <h2>Rod problem <small>steady 1D conduction</small></h2>
+          <p class="hint">−d/dx(kA dT/dx) = qA, both end temperatures fixed, insulated sides.</p>
+          <div class="grid2">
+            <label class="field"><span>Length L <small>m</small></span><input name="L" type="number" step="any" value="1"></label>
+            <label class="field"><span>Area A <small>m²</small></span><input name="A" type="number" step="any" value="0.0001"></label>
+            <label class="field"><span>Conductivity k <small>W/(m·K)</small></span><input name="k" type="number" step="any" value="10"></label>
+            <label class="field"><span>Heat gen. q <small>W/m³</small></span><input name="q" type="number" step="any" value="10000"></label>
+            <label class="field"><span>T(0) <small>°C</small></span><input name="T0" type="number" step="any" value="100"></label>
+            <label class="field"><span>T(L) <small>°C</small></span><input name="TL" type="number" step="any" value="20"></label>
+          </div>
+          <label class="field"><span>Mesh sizes for the study <small>elements, comma separated</small></span>
+            <input name="counts" type="text" value="10, 20, 40, 80"></label>
+          <label class="field"><span>Single solve N <small>elements</small></span>
+            <input name="N" type="number" step="1" value="10"></label>
+          <div class="msg" id="fea-msg" role="status"></div>
+          <div class="row">
+            <button class="btn btn-primary" type="submit">Run convergence study</button>
+            <button class="btn" type="button" id="fea-single">Solve single N</button>
+          </div>
+          <div class="row">
+            <button class="btn btn-ghost" type="button" id="fea-reset">Reset to assignment values</button>
+          </div>
+        </form>
+        <div class="card">
+          <h2>Export <small>CSV, generated in C++</small></h2>
+          <div class="row wrap">
+            <button class="btn" data-export="solutions">Nodal solutions</button>
+            <button class="btn" data-export="midpoints">Midpoint errors</button>
+            <button class="btn" data-export="convergence">Convergence table</button>
+          </div>
+        </div>
+      </aside>
+      <div class="content scroll">
+        <div class="card">
+          <h3 id="fea-profile-title">Temperature along the rod</h3>
+          <div class="plot" id="fea-profile"></div>
+        </div>
+        <div class="split">
+          <div class="card">
+            <h3>Mesh convergence (log–log)</h3>
+            <div class="plot" id="fea-conv"></div>
+          </div>
+          <div class="card">
+            <h3>Convergence table</h3>
+            <table class="data" id="fea-table"><tbody><tr><td class="muted">Run the study to fill this table.</td></tr></tbody></table>
+            <p class="hint" id="fea-summary"></p>
+          </div>
+        </div>
+        <details class="card notes">
+          <summary>Model, assumptions and a debugging note</summary>
+          <ul>
+            <li><b>Elements:</b> two-node linear elements. Element stiffness (kA/h)[1 −1; −1 1], load (qAh/2)[1; 1] — the exact integral of qA·Nᵢ for uniform q.</li>
+            <li><b>Boundary conditions:</b> T(0) and T(L) are imposed by moving the known value to the right-hand side of the neighbouring equation and replacing the boundary row with 1·T = value (keeps the matrix symmetric).</li>
+            <li><b>Assumptions:</b> steady state, constant k, A and q, insulated lateral surface so heat only flows along x. SI units; °C works because only temperature differences enter the equation.</li>
+            <li><b>Debugging insight:</b> the first error check, at the nodes, gave ~1e-13 for every mesh and looked "perfect". In 1D, linear elements with consistent loads are exact at the nodes, so the real discretisation error is between nodes. Interpolating to the element midpoints shows the true error, q·h²/(8k), which drops 4× each time h halves (order 2).</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===================== Performance ===================== -->
+    <section class="view" id="view-performance">
+      <aside class="sidebar">
+        <form class="card" id="bench-form" novalidate>
+          <h2>Batch workload <small>independent rod solves</small></h2>
+          <div class="grid2">
+            <label class="field"><span>Cases</span><input name="cases" type="number" value="1000" min="1"></label>
+            <label class="field"><span>Elements / case</span><input name="elements" type="number" value="10000" min="1"></label>
+            <label class="field"><span>Seed</span><input name="seed" type="number" value="20260101" min="0"></label>
+            <label class="field"><span>Max workers</span><input name="maxWorkers" type="number" value="4" min="1" max="16"></label>
+            <label class="field"><span>Warm-up runs</span><input name="warmup" type="number" value="1" min="0" max="5"></label>
+            <label class="field"><span>Measured runs</span><input name="repetitions" type="number" value="5" min="1" max="15"></label>
+          </div>
+          <p class="hint">k ∈ [1, 400] W/(m·K) and q ∈ [1e3, 1e5] W/m³ drawn from a fixed-seed generator. Same cases for every mode.</p>
+          <div class="msg" id="bench-msg" role="status"></div>
+          <div class="row">
+            <button class="btn btn-primary" type="submit" id="bench-run">Run benchmark</button>
+          </div>
+          <div class="row">
+            <select id="batch-workers" aria-label="Execution mode"></select>
+            <button class="btn" type="button" id="batch-run">Single run</button>
+          </div>
+        </form>
+        <div class="card" id="job-card" hidden>
+          <h2>Job</h2>
+          <div class="progress"><div class="progress-fill" id="job-bar"></div></div>
+          <p class="job-line" id="job-text"></p>
+          <button class="btn btn-danger" id="job-cancel">Cancel</button>
+        </div>
+        <div class="card">
+          <h2>This machine</h2>
+          <dl class="facts" id="sys-facts"></dl>
+        </div>
+      </aside>
+      <div class="content scroll">
+        <div class="card">
+          <div class="card-head">
+            <h3>Timing (median of measured runs, compute only)</h3>
+            <button class="btn" id="bench-export" disabled>Export CSV</button>
+          </div>
+          <div id="agree-badge"></div>
+          <table class="data" id="bench-table"><tbody><tr><td class="muted">Run the benchmark to see timings.</td></tr></tbody></table>
+        </div>
+        <div class="card">
+          <h3>Speedup T₁ / Tₚ</h3>
+          <div class="plot" id="bench-plot"></div>
+        </div>
+        <details class="card notes">
+          <summary>How this is measured, and its limits</summary>
+          <ul>
+            <li>The worker pool is a fixed set of <code>std::thread</code>s pulling case indices from an atomic counter. Each result goes to its own slot, so output order always matches input order.</li>
+            <li>Timed region = the solve call only. Case generation, JSON, rendering and file I/O are outside it. T₁ is the pool with one worker, so pool overhead cancels out of the speedup; the plain serial loop is shown for reference.</li>
+            <li>Each solve is O(N) and touches ~5 arrays, so with big meshes the run becomes memory-bandwidth bound and efficiency drops below 1 as workers share the memory bus. Small batches are dominated by thread start-up.</li>
+            <li>Laptop turbo/thermal limits and background apps add noise; that is why we take a median of several runs after a warm-up.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===================== Hardware ===================== -->
+    <section class="view" id="view-hardware">
+      <div class="content scroll full">
+        <div class="banner">
+          <b>SIMULATED HARDWARE.</b> These are C++ mock adapters. No USB, serial or JTAG traffic happens and no board is required.
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" id="hw-discover">Discover devices</button>
+          <span class="hint">Try: connect a device, then “Inject timeout”, then “Recover”.</span>
+        </div>
+        <div class="device-grid" id="hw-devices"></div>
+        <div class="split">
+          <div class="card">
+            <h3>Event log</h3>
+            <ol class="eventlog" id="hw-log"></ol>
+          </div>
+          <details class="card notes" open>
+            <summary>Integration design (block diagram)</summary>
+            <img class="diagram" src="assets/embedded_block_diagram.svg" alt="Block diagram: host PC connects over separate USB links to the MCU board, the FPGA board and the JTAG adapter; the JTAG adapter drives only the FPGA's JTAG header.">
+            <p class="hint">Full pin/voltage table and integration plan: docs/EMBEDDED_DESIGN.md</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Backprop ===================== -->
+    <section class="view" id="view-backprop">
+      <div class="content scroll full">
+        <div class="split">
+          <div class="card">
+            <h3>Forward pass <small>x = 1, y = 2, w = 0.5, b = 0, v = 1, c = 0</small></h3>
+            <table class="data" id="bp-forward"></table>
+          </div>
+          <div class="card">
+            <h3>After one gradient step <small>learning rate 0.1</small></h3>
+            <table class="data" id="bp-step"></table>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Gradient check <small>analytic chain rule vs central difference, ε = 1e-6</small></h3>
+          <table class="data" id="bp-grads"></table>
+          <p class="hint">Every gradient is negative: increasing any parameter raises ŷ towards the target (ŷ = 0.462 &lt; 2), so gradient descent increases all four.</p>
+        </div>
+        <div class="card">
+          <h3>Loss over 100 training steps</h3>
+          <div class="plot" id="bp-plot"></div>
+          <p class="hint">With one sample and enough capacity the network can fit y = 2 exactly, so the loss keeps falling towards zero; the log scale shows the steady linear-convergence rate.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="statusbar">
+    <span id="status-text">Starting…</span>
+    <button class="btn btn-ghost btn-small" id="log-toggle">Activity log</button>
+  </footer>
+  <div class="logpanel" id="logpanel" hidden><ol id="log-list"></ol></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

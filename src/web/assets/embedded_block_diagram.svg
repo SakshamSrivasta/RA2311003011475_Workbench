@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13">
+  <title>Host-connected workbench: MCU board, FPGA board and JTAG adapter</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#52514e"/>
+    </marker>
+  </defs>
+  <rect width="980" height="560" fill="#fcfcfb"/>
+  <text x="24" y="30" font-size="17" font-weight="600" fill="#0b0b0b">Embedded integration: one host, three independently connected devices</text>
+  <text x="24" y="50" fill="#52514e">Each device has its own USB link and its own voltage domain. Only the JTAG adapter touches the FPGA's JTAG pins.</text>
+
+  <!-- Host -->
+  <rect x="24" y="80" width="250" height="300" rx="10" fill="#eef4fc" stroke="#2a78d6" stroke-width="1.5"/>
+  <text x="40" y="106" font-weight="600" fill="#0b0b0b">Host PC (Windows 11 x64)</text>
+  <text x="40" y="130" fill="#52514e">Workbench UI (browser)</text>
+  <text x="40" y="148" fill="#52514e">↕ HTTP on 127.0.0.1</text>
+  <text x="40" y="166" fill="#52514e">C++ core: DeviceManager</text>
+  <rect x="40" y="180" width="218" height="40" rx="6" fill="#fcfcfb" stroke="#86b6ef"/>
+  <text x="50" y="205" fill="#0b0b0b">McuAdapter → COM port (CDC)</text>
+  <rect x="40" y="228" width="218" height="40" rx="6" fill="#fcfcfb" stroke="#86b6ef"/>
+  <text x="50" y="253" fill="#0b0b0b">FpgaAdapter → COM port (UART)</text>
+  <rect x="40" y="276" width="218" height="40" rx="6" fill="#fcfcfb" stroke="#86b6ef"/>
+  <text x="50" y="301" fill="#0b0b0b">JtagAdapter → vendor USB API</text>
+  <text x="40" y="344" fill="#52514e">USB ports: 5 V VBUS, shared host GND</text>
+  <text x="40" y="362" fill="#52514e" font-size="12">(today: mock adapters, no real I/O)</text>
+
+  <!-- MCU -->
+  <rect x="420" y="80" width="250" height="120" rx="10" fill="#fdf1e9" stroke="#eb6834" stroke-width="1.5"/>
+  <text x="436" y="106" font-weight="600" fill="#0b0b0b">MCU board (STM32 Nucleo-64 class)</text>
+  <text x="436" y="128" fill="#52514e">On-board ST-LINK: USB ↔ SWD + VCP</text>
+  <text x="436" y="146" fill="#52514e">3.3 V logic (LDO from USB 5 V)</text>
+  <text x="436" y="164" fill="#52514e">Telemetry: UART 115200 8N1 via VCP</text>
+  <text x="436" y="182" fill="#52514e">Debug: SWD (own probe, not shared)</text>
+
+  <!-- FPGA -->
+  <rect x="420" y="240" width="250" height="140" rx="10" fill="#e8f6ef" stroke="#1baf7a" stroke-width="1.5"/>
+  <text x="436" y="266" font-weight="600" fill="#0b0b0b">FPGA board (Artix-7 class)</text>
+  <text x="436" y="288" fill="#52514e">USB-UART bridge for status frames</text>
+  <text x="436" y="306" fill="#52514e">Core 1.0 V · aux 1.8 V · I/O bank 3.3 V</text>
+  <text x="436" y="324" fill="#52514e">Pmod I/O 3.3 V, NOT 5 V tolerant</text>
+  <rect x="436" y="336" width="176" height="32" rx="5" fill="#fcfcfb" stroke="#1baf7a"/>
+  <text x="446" y="357" fill="#0b0b0b">JTAG header (VREF 3.3 V)</text>
+
+  <!-- JTAG adapter -->
+  <rect x="420" y="420" width="250" height="110" rx="10" fill="#f1effc" stroke="#6250d6" stroke-width="1.5"/>
+  <text x="436" y="446" font-weight="600" fill="#0b0b0b">JTAG debug adapter (FT2232H MPSSE)</text>
+  <text x="436" y="468" fill="#52514e">TAP master: TCK TMS TDI → / ← TDO</text>
+  <text x="436" y="486" fill="#52514e">I/O level follows target VREF</text>
+  <text x="436" y="504" fill="#52514e">Debug/programming probe — not a</text>
+  <text x="436" y="520" fill="#52514e">compute board, runs no workloads</text>
+
+  <!-- USB links -->
+  <path d="M258 200 C 340 200, 340 140, 418 140" fill="none" stroke="#52514e" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="322" y="146" fill="#0b0b0b">USB #1</text>
+  <path d="M258 248 C 340 248, 340 300, 418 300" fill="none" stroke="#52514e" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="352" y="306" fill="#0b0b0b">USB #2</text>
+  <path d="M258 296 C 330 296, 330 470, 418 470" fill="none" stroke="#52514e" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="296" y="420" fill="#0b0b0b">USB #3</text>
+
+  <!-- JTAG cable -->
+  <path d="M672 470 C 770 470, 770 352, 614 352" fill="none" stroke="#6250d6" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="712" y="412" fill="#0b0b0b">JTAG ribbon (2.54 mm)</text>
+  <text x="712" y="430" fill="#52514e">TCK/TMS/TDI out, TDO in,</text>
+  <text x="712" y="448" fill="#52514e">VREF sense, GND</text>
+
+  <!-- Notes -->
+  <rect x="712" y="80" width="250" height="250" rx="10" fill="#fcfcfb" stroke="#e0dfda"/>
+  <text x="728" y="106" font-weight="600" fill="#0b0b0b">Rules this design follows</text>
+  <text x="728" y="130" fill="#52514e">• Common ground through the host</text>
+  <text x="728" y="148" fill="#52514e">  USB; no extra GND loops.</text>
+  <text x="728" y="172" fill="#52514e">• No direct MCU↔FPGA wiring yet.</text>
+  <text x="728" y="190" fill="#52514e">  If added: 3.3 V ↔ 3.3 V only, or a</text>
+  <text x="728" y="208" fill="#52514e">  level shifter (e.g. TXB0108 class).</text>
+  <text x="728" y="232" fill="#52514e">• One JTAG master at a time: close</text>
+  <text x="728" y="250" fill="#52514e">  vendor tools using the FPGA's own</text>
+  <text x="728" y="268" fill="#52514e">  USB-JTAG before using the adapter.</text>
+  <text x="728" y="292" fill="#52514e">• Never power the target from the</text>
+  <text x="728" y="310" fill="#52514e">  adapter; VREF is sense-only.</text>
+</svg>
