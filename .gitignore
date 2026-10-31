@@ -1,0 +1,22 @@
+# Build output
+build/
+build-*/
+out/
+bin/
+dist/
+*.obj
+*.o
+*.a
+*.lib
+*.exe
+*.dll
+*.pdb
+
+# The packaged ZIP is a release artefact, not source
+*_Workbench.zip
+
+# Editor / OS noise (keep shared .vscode run configs)
+.vscode/*.log
+.vscode/settings.local.json
+.DS_Store
+Thumbs.db

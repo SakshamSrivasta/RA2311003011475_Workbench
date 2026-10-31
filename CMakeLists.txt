@@ -1,0 +1,72 @@
+cmake_minimum_required(VERSION 3.20)
+
+project(UnifiedEngineeringWorkbench
+    VERSION 0.1.0
+    DESCRIPTION "PASS Science Works internship workbench (RA2311003011475)"
+    LANGUAGES CXX)
+
+# ---------------------------------------------------------------------------
+# Global settings
+# ---------------------------------------------------------------------------
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
+option(WB_BUILD_TESTS "Build the unit test executables" ON)
+option(WB_STATIC_RUNTIME "Link the C/C++ runtime statically (no runtime DLLs to ship)" ON)
+
+find_package(Threads REQUIRED)
+
+# Warnings and runtime linkage, applied per target through this interface lib.
+add_library(wb_options INTERFACE)
+if(MSVC)
+    target_compile_options(wb_options INTERFACE /W4 /permissive- /utf-8)
+    if(WB_STATIC_RUNTIME)
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    endif()
+else()
+    target_compile_options(wb_options INTERFACE -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wno-sign-conversion)
+    if(MINGW AND WB_STATIC_RUNTIME)
+        # Pulls libstdc++, libgcc and winpthread into the .exe so a clean
+        # Windows machine needs no MinGW DLLs.
+        target_link_options(wb_options INTERFACE -static -static-libgcc -static-libstdc++)
+    endif()
+endif()
+
+# Recorded in benchmark reports (Task D asks for compiler and optimisation flags).
+string(TOUPPER "${CMAKE_BUILD_TYPE}" _wb_build_type_upper)
+set(WB_BUILD_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_${_wb_build_type_upper}}")
+string(STRIP "${WB_BUILD_FLAGS}" WB_BUILD_FLAGS)
+
+# ---------------------------------------------------------------------------
+# Core library: all numerics, parsing, concurrency and device mocks.
+# Pure C++17, no UI and no transport code.
+# ---------------------------------------------------------------------------
+add_library(wb_core STATIC
+    src/core/common/Errors.cpp
+    src/core/fea/ThermalRod1D.cpp
+    src/core/batch/BatchGenerator.cpp
+    src/core/batch/BatchRunner.cpp
+    src/core/batch/Benchmark.cpp
+    src/core/ml/Backprop.cpp
+    src/core/platform/SystemInfo.cpp
+)
+target_include_directories(wb_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(wb_core PUBLIC Threads::Threads PRIVATE wb_options)
+target_compile_definitions(wb_core PRIVATE
+    WB_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
+    WB_BUILD_FLAGS="${WB_BUILD_FLAGS}")
+if(WIN32)
+    target_link_libraries(wb_core PRIVATE advapi32)  # RegGetValueA in SystemInfo
+endif()
+
+# ---------------------------------------------------------------------------
+# Tests (added in the next step) and the application/launcher (added later).
+# ---------------------------------------------------------------------------
+if(WB_BUILD_TESTS)
+    enable_testing()
+endif()
