@@ -118,8 +118,8 @@ int main(int argc, char** argv) {
     httplib::Server server;
     server.set_payload_max_length(80u * 1024u * 1024u);  // a bit above the 64 MB reader limit
     server.set_logger([](const httplib::Request& req, const httplib::Response& res) {
-        // Telemetry and job polling fire every second; logging them would bury everything else.
-        if (req.path.rfind("/api/", 0) != 0 || req.path.find("/telemetry") != std::string::npos ||
+        // Health checks, telemetry and job polling repeat every few seconds; logging them would bury everything else.
+        if (req.path.rfind("/api/", 0) != 0 || req.path == "/api/health" || req.path.find("/telemetry") != std::string::npos ||
             (req.method == "GET" && req.path.rfind("/api/jobs/", 0) == 0)) {
             return;
         }

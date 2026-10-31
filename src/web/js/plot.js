@@ -2,7 +2,7 @@
 // with a tooltip. Enough for the workbench without a charting dependency.
 //
 // spec = {
-//   xLabel, yLabel, logX, logY, height,
+//   xLabel, yLabel, logX, logY, height, integerX (whole-number x ticks only),
 //   series: [{ label, x: [], y: [], color: '--css-var' | '#hex', dashed, markers }],
 //   empty: 'text shown when there is no data'
 // }
@@ -118,7 +118,8 @@ function render(container) {
   const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, height: H, role: 'img', 'aria-label': `${spec.yLabel} vs ${spec.xLabel}` });
   const grid = cssVar('--grid'), axis = cssVar('--axis'), text2 = cssVar('--text-2'), text = cssVar('--text');
 
-  for (const t of spec.logX ? logTicks(x0, x1) : niceLinearTicks(x0, x1)) {
+  const xTicks = spec.logX ? logTicks(x0, x1) : niceLinearTicks(x0, x1);
+  for (const t of spec.integerX ? xTicks.filter(Number.isInteger) : xTicks) {
     svg.append(el('line', { x1: sx(t), x2: sx(t), y1: m.t, y2: m.t + ph, stroke: grid }));
     svg.append(el('text', { x: sx(t), y: m.t + ph + 16, 'font-size': 11.5, fill: text2, 'text-anchor': 'middle' }, spec.logX ? logLabel(t) : fmt(t, 3)));
   }

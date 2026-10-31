@@ -77,6 +77,10 @@ async function quit() {
 
 // ---------------------------------------------------------------- start-up
 
+// Last-resort reporting so a bug in a click handler is visible, never silent.
+window.addEventListener('error', (e) => setStatus(`Unexpected UI error: ${e.message}`, 'error'));
+window.addEventListener('unhandledrejection', (e) => setStatus(`Unexpected UI error: ${e.reason?.message || e.reason}`, 'error'));
+
 async function start() {
   initTheme();
   initGeometry();

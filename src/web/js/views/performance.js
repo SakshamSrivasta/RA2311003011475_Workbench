@@ -1,5 +1,8 @@
 // Performance view: benchmark and single batch runs as background jobs with
 // progress and cancel, plus host details for the report.
+//
+// Note: no form field may be called "elements" - a named input shadows the
+// form's own .elements collection (this broke the Run button once).
 
 import { api, downloadCsv } from '../api.js';
 import { linePlot } from '../plot.js';
@@ -14,7 +17,7 @@ function readForm() {
   const form = $('bench-form');
   const out = {};
   const problems = [];
-  const limits = { cases: [1, 100000], elements: [1, 10000000], seed: [0, 9e15], maxWorkers: [1, 16], warmup: [0, 5], repetitions: [1, 15] };
+  const limits = { cases: [1, 100000], elementsPerCase: [1, 10000000], seed: [0, 9e15], maxWorkers: [1, 16], warmup: [0, 5], repetitions: [1, 15] };
   for (const [name, [lo, hi]] of Object.entries(limits)) {
     const input = form.elements[name];
     const v = Number(input.value);
@@ -23,15 +26,16 @@ function readForm() {
     if (bad) problems.push(`${input.closest('label').querySelector('span').textContent} must be a whole number from ${lo} to ${hi}.`);
     out[name] = v;
   }
-  if (!problems.length && out.cases * (out.elements + 1) > 20_000_000) {
-    problems.push(`Cases × (elements + 1) = ${(out.cases * (out.elements + 1)).toLocaleString()} values; keep it under 20 million (memory guard).`);
+  if (!problems.length && out.cases * (out.elementsPerCase + 1) > 20_000_000) {
+    problems.push(`Cases × (elements + 1) = ${(out.cases * (out.elementsPerCase + 1)).toLocaleString()} values; keep it under 20 million (memory guard).`);
   }
   if (problems.length) {
     showMsg('bench-msg', problems.join(' '), 'error');
     return null;
   }
   showMsg('bench-msg', '');
-  return out;
+  const { elementsPerCase, ...rest } = out;
+  return { ...rest, elements: elementsPerCase };  // API field name
 }
 
 function setJobUi(running) {
@@ -116,7 +120,7 @@ function showBenchmark(r) {
     '</p>';
 
   linePlot($('bench-plot'), {
-    xLabel: 'Worker threads p', yLabel: 'Speedup T₁ / Tₚ', height: 300,
+    xLabel: 'Worker threads p', yLabel: 'Speedup T₁ / Tₚ', height: 300, integerX: true,
     series: [
       { label: 'Measured', x: r.parallel.map((p) => p.workers), y: r.parallel.map((p) => p.speedup), color: '--series-1', markers: true },
       { label: 'Ideal (= p)', x: r.parallel.map((p) => p.workers), y: r.parallel.map((p) => p.workers), color: '--text-2', dashed: true },
