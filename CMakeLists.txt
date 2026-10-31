@@ -29,7 +29,9 @@ if(MSVC)
         set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
     endif()
 else()
-    target_compile_options(wb_options INTERFACE -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wno-sign-conversion)
+    target_compile_options(wb_options INTERFACE -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wno-sign-conversion
+        # Keep this machine's absolute paths out of the binaries (__FILE__ in test messages).
+        -ffile-prefix-map=${CMAKE_SOURCE_DIR}/=)
     if(MINGW AND WB_STATIC_RUNTIME)
         # Pulls libstdc++, libgcc and winpthread into the .exe so a clean
         # Windows machine needs no MinGW DLLs.

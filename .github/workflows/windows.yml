@@ -1,0 +1,30 @@
+# Builds with MSVC on a clean Windows runner, runs the unit tests and the
+# Launch.exe smoke test. Independent check that the code is not tied to the
+# cross-compiler used for the packaged build.
+name: windows-build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  msvc:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+      - name: Build
+        run: cmake --build build --config Release --parallel
+      - name: Unit tests
+        run: ctest --test-dir build -C Release --output-on-failure
+      - name: Launch.exe smoke test
+        run: build\Release\Launch.exe --smoke-test
+      - name: Results on a Windows host
+        run: |
+          mkdir ci-results
+          build\Release\wb_results.exe ci-results --skip-io
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-ci-results
+          path: ci-results

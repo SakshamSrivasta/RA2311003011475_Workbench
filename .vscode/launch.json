@@ -1,0 +1,36 @@
+{
+  // Select a configuration in the Run and Debug view, then press F5.
+  // Windows configs need the "C/C++" extension (ms-vscode.cpptools).
+  // No extension at all? Use Terminal > Run Task > "Workbench: run packaged Launch.exe".
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Workbench: packaged Launch.exe (Windows)",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/Launch.exe",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "newExternalWindow"
+    },
+    {
+      "name": "Workbench: dev build (Windows, build/Release)",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/Release/Launch.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "newExternalWindow",
+      "preLaunchTask": "Workbench: build (CMake Release)"
+    },
+    {
+      "name": "Workbench: dev build (macOS/Linux)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/Launch",
+      "cwd": "${workspaceFolder}",
+      "MIMode": "lldb",
+      "linux": { "MIMode": "gdb" },
+      "preLaunchTask": "Workbench: build (CMake Release)"
+    }
+  ]
+}

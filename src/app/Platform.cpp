@@ -1,6 +1,8 @@
 #include "app/Platform.h"
 
+#include <cstdint>
 #include <cstdlib>
+#include <iterator>
 
 #if defined(_WIN32)
 #  ifndef NOMINMAX

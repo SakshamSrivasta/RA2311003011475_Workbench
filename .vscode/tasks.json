@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Workbench: run packaged Launch.exe",
+      "detail": "Starts the same Launch.exe you would double-click. No extension needed.",
+      "type": "process",
+      "command": "${workspaceFolder}/Launch.exe",
+      "options": { "cwd": "${workspaceFolder}" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Workbench: build (CMake Release)",
+      "type": "process",
+      "command": "cmake",
+      "args": ["--build", "build", "--config", "Release", "--parallel"],
+      "dependsOn": "Workbench: configure (CMake)",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc", "$msCompile"]
+    },
+    {
+      "label": "Workbench: configure (CMake)",
+      "type": "process",
+      "command": "cmake",
+      "args": ["-S", ".", "-B", "build", "-DCMAKE_BUILD_TYPE=Release"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Workbench: run unit tests",
+      "type": "process",
+      "command": "ctest",
+      "args": ["--test-dir", "build", "-C", "Release", "--output-on-failure"],
+      "dependsOn": "Workbench: build (CMake Release)",
+      "group": "test",
+      "problemMatcher": []
+    }
+  ]
+}
