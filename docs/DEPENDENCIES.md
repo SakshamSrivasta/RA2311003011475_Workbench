@@ -31,7 +31,7 @@ The Universal C Runtime (`api-ms-win-crt-*.dll`) is part of Windows 10/11 and is
 | CMake | 3.31.6 | minimum required 3.20 |
 | Apple clang (macOS dev builds/tests) | 21.0.0 | |
 | llvm-mingw | 20260922 | Windows cross-compiler for the packaged build |
-| MSVC (CI) | Visual Studio 2022, `windows-latest` runner | `.github/workflows/windows.yml` |
+| MSVC (CI) | whichever Visual Studio the `windows-latest` runner has | `.github/workflows/windows.yml` |
 
 ## Not used
 

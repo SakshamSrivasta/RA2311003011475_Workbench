@@ -11,9 +11,12 @@ jobs:
   msvc:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+      # No -G: let CMake pick whichever Visual Studio the runner image has.
       - name: Configure
-        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+        run: |
+          cmake --version
+          cmake -S . -B build -A x64
       - name: Build
         run: cmake --build build --config Release --parallel
       - name: Unit tests
@@ -24,7 +27,7 @@ jobs:
         run: |
           mkdir ci-results
           build\Release\wb_results.exe ci-results --skip-io
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: windows-ci-results
           path: ci-results
