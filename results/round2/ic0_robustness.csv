@@ -1,0 +1,12 @@
+# min_pivot_ratio = min_i L_ii^2 / a_ii (1 = untouched diagonal, 0 = breakdown).
+case,aspect_ratio,n,ic_ok_without_shift,min_pivot_ratio,shift_needed,pcg_ic0_iterations,pcg_jacobi_iterations,cg_iterations
+cube, flat cells (z refined),1,1331,yes,0.9653853470361194,0,11,22,22
+cube, flat cells (z refined),4,5687,yes,0.7157544223806591,0,11,96,96
+cube, flat cells (z refined),16,23111,yes,0.5107909288193099,0,10,374,374
+cube, flat cells (z refined),64,92807,yes,0.45415782580063846,0,9,1390,1390
+cube, long cells (x,y refined),4,6727,yes,0.8720520537194062,0,22,66,66
+cube, long cells (x,y refined),16,112903,yes,0.8417041884757395,0,74,252,252
+heat sink B, pad k = 200/1, 2 x 2 x 0.5 mm cells,4,22402,yes,0.4355445747274347,0,63,429,746
+heat sink B, pad k = 200/100, 2 x 2 x 0.5 mm cells,4,22402,yes,0.4355445747274347,0,63,430,855
+heat sink B, pad k = 200/10000, 2 x 2 x 0.5 mm cells,4,22402,yes,0.4355445747274347,0,63,430,2586
+heat sink B, pad k = 200/1e+06, 2 x 2 x 0.5 mm cells,4,22402,yes,0.4355445747274347,0,63,430,5882

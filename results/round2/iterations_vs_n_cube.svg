@@ -1,0 +1,97 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='520' viewBox='0 0 1000 520' font-family='Segoe UI, Helvetica, Arial, sans-serif'>
+<rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='78' y='26' font-size='17' font-weight='600' fill='#0b0b0b'>Unit cube, manufactured solution: iterations to 1e-8</text>
+<text x='78' y='46' font-size='12.5' fill='#52514e'>Sweeps (Jacobi, Gauss-Seidel, SOR) or iterations (CG). Log-log slopes; theory: GS 2/3, CG and SOR 1/3. CG and PCG + Jacobi coincide: the cube's diagonal is constant.</text>
+<line x1='78' x2='78' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='78' y='476' font-size='12' fill='#52514e' text-anchor='middle'>100</text>
+<line x1='205.76' x2='205.76' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='205.76' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1000</text>
+<line x1='333.52' x2='333.52' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='333.52' y='476' font-size='12' fill='#52514e' text-anchor='middle'>10000</text>
+<line x1='461.28' x2='461.28' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='461.28' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1e+05</text>
+<line x1='589.04' x2='589.04' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='589.04' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1e+06</text>
+<line x1='716.8' x2='716.8' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='716.8' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1e+07</text>
+<line x1='78' x2='716.8' y1='458' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='462' font-size='12' fill='#52514e' text-anchor='end'>1</text>
+<line x1='78' x2='716.8' y1='361' y2='361' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='365' font-size='12' fill='#52514e' text-anchor='end'>10</text>
+<line x1='78' x2='716.8' y1='264' y2='264' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='268' font-size='12' fill='#52514e' text-anchor='end'>100</text>
+<line x1='78' x2='716.8' y1='167' y2='167' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='171' font-size='12' fill='#52514e' text-anchor='end'>1000</text>
+<line x1='78' x2='716.8' y1='70' y2='70' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='74' font-size='12' fill='#52514e' text-anchor='end'>10000</text>
+<line x1='78' x2='716.8' y1='458' y2='458' stroke='#8a8984' stroke-width='1'/>
+<text x='397.4' y='502' font-size='13' fill='#0b0b0b' text-anchor='middle'>unknowns n</text>
+<text transform='translate(18,264) rotate(-90)' font-size='13' fill='#0b0b0b' text-anchor='middle'>iterations</text>
+<polyline fill='none' stroke='#6250d6' stroke-width='2' stroke-linejoin='round' points='146.389,264 273.252,206.667 344.403,174.849 394.089,151.639 '/>
+<circle cx='146.389' cy='264' r='4.5' fill='#6250d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='273.252' cy='206.667' r='4.5' fill='#6250d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='344.403' cy='174.849' r='4.5' fill='#6250d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='394.089' cy='151.639' r='4.5' fill='#6250d6' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#eb6834' stroke-width='2' stroke-linejoin='round' points='146.389,285.519 273.252,234.8 344.403,203.545 394.089,180.839 463.362,148.267 512.131,125.314 '/>
+<circle cx='146.389' cy='285.519' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='273.252' cy='234.8' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='344.403' cy='203.545' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='394.089' cy='180.839' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='463.362' cy='148.267' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='512.131' cy='125.314' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#1baf7a' stroke-width='2' stroke-linejoin='round' points='146.389,302.6 273.252,293.2 344.403,279.025 394.089,264 463.362,246.919 512.131,234.8 580.502,217.719 628.826,205.6 '/>
+<circle cx='146.389' cy='302.6' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='273.252' cy='293.2' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='344.403' cy='279.025' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='394.089' cy='264' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='463.362' cy='246.919' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='512.131' cy='234.8' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='580.502' cy='217.719' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='628.826' cy='205.6' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#eda100' stroke-width='2' stroke-linejoin='round' points='146.389,346.826 273.252,316.147 344.403,298.585 394.089,286.227 463.362,269.867 512.131,258.112 580.502,241.646 628.826,229.838 '/>
+<circle cx='146.389' cy='346.826' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='273.252' cy='316.147' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='344.403' cy='298.585' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='394.089' cy='286.227' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='463.362' cy='269.867' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='512.131' cy='258.112' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='580.502' cy='241.646' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='628.826' cy='229.838' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#e87ba4' stroke-width='2' stroke-linejoin='round' points='146.389,346.826 273.252,316.147 344.403,298.585 394.089,286.227 463.362,269.867 512.131,258.112 580.502,241.646 628.826,229.838 '/>
+<circle cx='146.389' cy='346.826' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='273.252' cy='316.147' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='344.403' cy='298.585' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='394.089' cy='286.227' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='463.362' cy='269.867' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='512.131' cy='258.112' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='580.502' cy='241.646' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='628.826' cy='229.838' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#008300' stroke-width='2' stroke-linejoin='round' points='146.389,370.4 273.252,346.826 344.403,331.8 394.089,320.748 463.362,307.039 512.131,296.712 580.502,281.504 628.826,270.846 '/>
+<circle cx='146.389' cy='370.4' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='273.252' cy='346.826' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='344.403' cy='331.8' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='394.089' cy='320.748' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='463.362' cy='307.039' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='512.131' cy='296.712' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='580.502' cy='281.504' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='628.826' cy='270.846' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<rect x='732.8' y='78' width='251.2' height='130' fill='#fcfcfb' fill-opacity='0.92' stroke='#e6e5e0' rx='4'/>
+<line x1='740.8' x2='762.8' y1='92' y2='92' stroke='#6250d6' stroke-width='2'/>
+<circle cx='751.8' cy='92' r='4' fill='#6250d6'/>
+<text x='768.8' y='96' font-size='12' fill='#0b0b0b'>Jacobi  (slope 0.60)</text>
+<line x1='740.8' x2='762.8' y1='112' y2='112' stroke='#eb6834' stroke-width='2'/>
+<circle cx='751.8' cy='112' r='4' fill='#eb6834'/>
+<text x='768.8' y='116' font-size='12' fill='#0b0b0b'>Gauss-Seidel  (slope 0.58)</text>
+<line x1='740.8' x2='762.8' y1='132' y2='132' stroke='#1baf7a' stroke-width='2'/>
+<circle cx='751.8' cy='132' r='4' fill='#1baf7a'/>
+<text x='768.8' y='136' font-size='12' fill='#0b0b0b'>SOR (fitted omega)  (slope 0.28)</text>
+<line x1='740.8' x2='762.8' y1='152' y2='152' stroke='#eda100' stroke-width='2'/>
+<circle cx='751.8' cy='152' r='4' fill='#eda100'/>
+<text x='768.8' y='156' font-size='12' fill='#0b0b0b'>CG  (slope 0.32)</text>
+<line x1='740.8' x2='762.8' y1='172' y2='172' stroke='#e87ba4' stroke-width='2'/>
+<circle cx='751.8' cy='172' r='4' fill='#e87ba4'/>
+<text x='768.8' y='176' font-size='12' fill='#0b0b0b'>PCG + Jacobi  (slope 0.32)</text>
+<line x1='740.8' x2='762.8' y1='192' y2='192' stroke='#008300' stroke-width='2'/>
+<circle cx='751.8' cy='192' r='4' fill='#008300'/>
+<text x='768.8' y='196' font-size='12' fill='#0b0b0b'>PCG + IC(0)  (slope 0.27)</text>
+</svg>

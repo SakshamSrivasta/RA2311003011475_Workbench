@@ -1,0 +1,48 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='760' height='460' viewBox='0 0 760 460' font-family='Segoe UI, Helvetica, Arial, sans-serif'>
+<rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='78' y='26' font-size='17' font-weight='600' fill='#0b0b0b'>Prescribed temperatures by penalty: condition number</text>
+<text x='78' y='46' font-size='12.5' fill='#52514e'>Cube, 16 cells. Lanczos estimate (300 CG steps). Dashed: symmetric elimination, which the study uses.</text>
+<line x1='78' x2='78' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='78' y='416' font-size='12' fill='#52514e' text-anchor='middle'>100</text>
+<line x1='209.6' x2='209.6' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='209.6' y='416' font-size='12' fill='#52514e' text-anchor='middle'>10000</text>
+<line x1='341.2' x2='341.2' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='341.2' y='416' font-size='12' fill='#52514e' text-anchor='middle'>1e+06</text>
+<line x1='472.8' x2='472.8' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='472.8' y='416' font-size='12' fill='#52514e' text-anchor='middle'>1e+08</text>
+<line x1='604.4' x2='604.4' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='604.4' y='416' font-size='12' fill='#52514e' text-anchor='middle'>1e+10</text>
+<line x1='736' x2='736' y1='70' y2='398' stroke='#e6e5e0' stroke-width='1'/>
+<text x='736' y='416' font-size='12' fill='#52514e' text-anchor='middle'>1e+12</text>
+<line x1='78' x2='736' y1='372.769' y2='372.769' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='376.769' font-size='12' fill='#52514e' text-anchor='end'>100</text>
+<line x1='78' x2='736' y1='322.308' y2='322.308' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='326.308' font-size='12' fill='#52514e' text-anchor='end'>10000</text>
+<line x1='78' x2='736' y1='271.846' y2='271.846' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='275.846' font-size='12' fill='#52514e' text-anchor='end'>1e+06</text>
+<line x1='78' x2='736' y1='221.385' y2='221.385' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='225.385' font-size='12' fill='#52514e' text-anchor='end'>1e+08</text>
+<line x1='78' x2='736' y1='170.923' y2='170.923' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='174.923' font-size='12' fill='#52514e' text-anchor='end'>1e+10</text>
+<line x1='78' x2='736' y1='120.462' y2='120.462' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='124.462' font-size='12' fill='#52514e' text-anchor='end'>1e+12</text>
+<line x1='78' x2='736' y1='70' y2='70' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='74' font-size='12' fill='#52514e' text-anchor='end'>1e+14</text>
+<line x1='78' x2='736' y1='398' y2='398' stroke='#8a8984' stroke-width='1'/>
+<text x='407' y='442' font-size='13' fill='#0b0b0b' text-anchor='middle'>penalty / largest diagonal entry</text>
+<text transform='translate(18,234) rotate(-90)' font-size='13' fill='#0b0b0b' text-anchor='middle'>estimated condition number</text>
+<polyline fill='none' stroke='#eb6834' stroke-width='2' stroke-linejoin='round' points='78,338.128 209.6,287.747 341.2,237.286 472.8,186.824 604.4,136.363 736,85.9013 '/>
+<circle cx='78' cy='338.128' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='209.6' cy='287.747' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='341.2' cy='237.286' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='472.8' cy='186.824' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='604.4' cy='136.363' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='736' cy='85.9013' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#2a78d6' stroke-width='2' stroke-linejoin='round' stroke-dasharray='6 4' points='78,384.402 736,384.402 '/>
+<rect x='86' y='78' width='132.4' height='50' fill='#fcfcfb' fill-opacity='0.92' stroke='#e6e5e0' rx='4'/>
+<line x1='94' x2='116' y1='92' y2='92' stroke='#eb6834' stroke-width='2'/>
+<circle cx='105' cy='92' r='4' fill='#eb6834'/>
+<text x='122' y='96' font-size='12' fill='#0b0b0b'>penalty method</text>
+<line x1='94' x2='116' y1='112' y2='112' stroke='#2a78d6' stroke-width='2' stroke-dasharray='6 4'/>
+<text x='122' y='116' font-size='12' fill='#0b0b0b'>elimination</text>
+</svg>

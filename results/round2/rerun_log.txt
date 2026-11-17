@@ -1,0 +1,3 @@
+old: converged t=1644.278559417  new: converged t=841.168924125 it=0
+old: converged t=178.040598333  new: converged t=24.517857875 it=913
+old: time-limit t=455.926541125  new: converged t=203.375798416 it=4650

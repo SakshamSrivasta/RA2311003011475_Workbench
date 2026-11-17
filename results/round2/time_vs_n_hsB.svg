@@ -1,0 +1,81 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='520' viewBox='0 0 1000 520' font-family='Segoe UI, Helvetica, Arial, sans-serif'>
+<rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='78' y='26' font-size='17' font-weight='600' fill='#0b0b0b'>Heat sink B (thermal pad + copper spreader): time to solution</text>
+<text x='78' y='46' font-size='12.5' fill='#52514e'>Setup + solve, median of runs; relative residual 1e-8. Dashed: skyline cost predicted from its plan (run refused).</text>
+<line x1='78' x2='78' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='78' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1000</text>
+<line x1='219.55' x2='219.55' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='219.55' y='476' font-size='12' fill='#52514e' text-anchor='middle'>10000</text>
+<line x1='361.1' x2='361.1' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='361.1' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1e+05</text>
+<line x1='502.65' x2='502.65' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='502.65' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1e+06</text>
+<line x1='644.2' x2='644.2' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='644.2' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1e+07</text>
+<line x1='78' x2='644.2' y1='402.571' y2='402.571' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='406.571' font-size='12' fill='#52514e' text-anchor='end'>0.1</text>
+<line x1='78' x2='644.2' y1='291.714' y2='291.714' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='295.714' font-size='12' fill='#52514e' text-anchor='end'>10</text>
+<line x1='78' x2='644.2' y1='180.857' y2='180.857' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='184.857' font-size='12' fill='#52514e' text-anchor='end'>1000</text>
+<line x1='78' x2='644.2' y1='70' y2='70' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='74' font-size='12' fill='#52514e' text-anchor='end'>1e+05</text>
+<line x1='78' x2='644.2' y1='458' y2='458' stroke='#8a8984' stroke-width='1'/>
+<text x='361.1' y='502' font-size='13' fill='#0b0b0b' text-anchor='middle'>unknowns n</text>
+<text transform='translate(18,264) rotate(-90)' font-size='13' fill='#0b0b0b' text-anchor='middle'>seconds</text>
+<polyline fill='none' stroke='#2a78d6' stroke-width='2' stroke-linejoin='round' points='201.849,412.023 300.153,323.293 413.066,216.891 '/>
+<circle cx='201.849' cy='412.023' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='300.153' cy='323.293' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='413.066' cy='216.891' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#2a78d6' stroke-width='2' stroke-linejoin='round' stroke-dasharray='6 4' points='413.066,216.891 535.066,105.595 '/>
+<polyline fill='none' stroke='#e34948' stroke-width='2' stroke-linejoin='round' points='201.849,394.228 300.153,289.963 '/>
+<circle cx='201.849' cy='394.228' r='4.5' fill='#e34948' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='300.153' cy='289.963' r='4.5' fill='#e34948' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#eb6834' stroke-width='2' stroke-linejoin='round' points='201.849,294.775 300.153,227.352 '/>
+<circle cx='201.849' cy='294.775' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='300.153' cy='227.352' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#1baf7a' stroke-width='2' stroke-linejoin='round' points='201.849,393.509 300.153,339.522 413.066,278.402 535.066,212.152 '/>
+<circle cx='201.849' cy='393.509' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='300.153' cy='339.522' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='413.066' cy='278.402' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='535.066' cy='212.152' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#eda100' stroke-width='2' stroke-linejoin='round' points='201.849,428.569 300.153,381.966 413.066,325.866 535.066,261.557 '/>
+<circle cx='201.849' cy='428.569' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='300.153' cy='381.966' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='413.066' cy='325.866' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='535.066' cy='261.557' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#e87ba4' stroke-width='2' stroke-linejoin='round' points='201.849,444.403 300.153,390.846 413.066,335.977 535.066,270.431 '/>
+<circle cx='201.849' cy='444.403' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='300.153' cy='390.846' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='413.066' cy='335.977' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='535.066' cy='270.431' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#008300' stroke-width='2' stroke-linejoin='round' points='201.849,445.732 300.153,391.429 413.066,335.659 535.066,271.366 '/>
+<circle cx='201.849' cy='445.732' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='300.153' cy='391.429' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='413.066' cy='335.659' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='535.066' cy='271.366' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<rect x='660.2' y='78' width='323.8' height='170' fill='#fcfcfb' fill-opacity='0.92' stroke='#e6e5e0' rx='4'/>
+<line x1='668.2' x2='690.2' y1='92' y2='92' stroke='#2a78d6' stroke-width='2'/>
+<circle cx='679.2' cy='92' r='4' fill='#2a78d6'/>
+<text x='696.2' y='96' font-size='12' fill='#0b0b0b'>Skyline Cholesky (RCM)  (slope 2.36)</text>
+<line x1='668.2' x2='690.2' y1='112' y2='112' stroke='#2a78d6' stroke-width='2' stroke-dasharray='6 4'/>
+<text x='696.2' y='116' font-size='12' fill='#0b0b0b'>Skyline Cholesky (RCM) (predicted, refused)</text>
+<line x1='668.2' x2='690.2' y1='132' y2='132' stroke='#e34948' stroke-width='2'/>
+<circle cx='679.2' cy='132' r='4' fill='#e34948'/>
+<text x='696.2' y='136' font-size='12' fill='#0b0b0b'>Skyline Cholesky (natural)  (slope 2.71)</text>
+<line x1='668.2' x2='690.2' y1='152' y2='152' stroke='#eb6834' stroke-width='2'/>
+<circle cx='679.2' cy='152' r='4' fill='#eb6834'/>
+<text x='696.2' y='156' font-size='12' fill='#0b0b0b'>Gauss-Seidel  (slope 1.75)</text>
+<line x1='668.2' x2='690.2' y1='172' y2='172' stroke='#1baf7a' stroke-width='2'/>
+<circle cx='679.2' cy='172' r='4' fill='#1baf7a'/>
+<text x='696.2' y='176' font-size='12' fill='#0b0b0b'>SOR (fitted omega)  (slope 1.39)</text>
+<line x1='668.2' x2='690.2' y1='192' y2='192' stroke='#eda100' stroke-width='2'/>
+<circle cx='679.2' cy='192' r='4' fill='#eda100'/>
+<text x='696.2' y='196' font-size='12' fill='#0b0b0b'>CG  (slope 1.28)</text>
+<line x1='668.2' x2='690.2' y1='212' y2='212' stroke='#e87ba4' stroke-width='2'/>
+<circle cx='679.2' cy='212' r='4' fill='#e87ba4'/>
+<text x='696.2' y='216' font-size='12' fill='#0b0b0b'>PCG + Jacobi  (slope 1.32)</text>
+<line x1='668.2' x2='690.2' y1='232' y2='232' stroke='#008300' stroke-width='2'/>
+<circle cx='679.2' cy='232' r='4' fill='#008300'/>
+<text x='696.2' y='236' font-size='12' fill='#0b0b0b'>PCG + IC(0)  (slope 1.33)</text>
+</svg>

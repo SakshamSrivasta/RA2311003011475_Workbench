@@ -1,0 +1,11 @@
+# Unit cube, manufactured solution, 16 cells per side. Plain CG to relative residual 1e-8.
+# kappa_est: Lanczos estimate from a separate 300-iteration CG run (elimination: from the solve itself).
+# A large penalty dominates ||b||, so the relative-residual test is met while the interior is still wrong.
+method,penalty_over_max_diag,n,cg_iterations,status,kappa_est,max_error_vs_elimination_C
+elimination,,3375,29,converged,34.590240249038416,0
+penalty,100,4913,43,converged,2360.4017584913354,0.04123995470325781
+penalty,10000,4913,34,converged,234313.254272591,0.048182741420561115
+penalty,1e+06,4913,21,converged,23429600.169743206,5.218305365089918
+penalty,1e+08,4913,1,converged,2342958291.7165647,160.60543107728566
+penalty,1e+10,4913,1,converged,234297323778.5868,160.60543109814043
+penalty,1e+12,4913,1,converged,23429582742913.06,160.605431098349

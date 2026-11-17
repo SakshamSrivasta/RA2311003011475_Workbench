@@ -26,6 +26,8 @@ struct PlotSpec {
     bool logX = false, logY = false;
     bool integerX = false;       // whole-number x ticks only (e.g. worker counts)
     bool legendTopLeft = false;  // default is top-right; pick whichever corner the data leaves empty
+    bool legendBottomRight = false;
+    bool legendOutside = false;  // legend in its own column right of the plot (many series)
     std::vector<Series> series;
     int width = 760, height = 460;
 };
@@ -81,7 +83,10 @@ inline std::vector<double> logTicks(double lo, double hi) {
 inline std::string renderSvg(const PlotSpec& spec) {
     using namespace detail;
     const double left = 78, right = 24, top = spec.subtitle.empty() ? 52 : 70, bottom = 62;
-    const double pw = spec.width - left - right, ph = spec.height - top - bottom;
+    std::size_t longestLabel = 0;
+    for (const auto& s : spec.series) longestLabel = std::max(longestLabel, s.label.size());
+    const double outsideWidth = spec.legendOutside ? 48 + 6.6 * static_cast<double>(longestLabel) : 0.0;
+    const double pw = spec.width - left - right - outsideWidth, ph = spec.height - top - bottom;
 
     double xmin = 1e300, xmax = -1e300, ymin = 1e300, ymax = -1e300;
     for (const auto& s : spec.series) {
@@ -164,7 +169,8 @@ inline std::string renderSvg(const PlotSpec& spec) {
         std::size_t longest = 0;
         for (const auto& s : spec.series) longest = std::max(longest, s.label.size());
         const double lw = 40 + 6.6 * static_cast<double>(longest), lh = 20.0 * static_cast<double>(spec.series.size()) + 10;
-        const double lx = spec.legendTopLeft ? left + 8 : left + pw - lw - 8, ly = top + 8;
+        const double lx = spec.legendOutside ? left + pw + 16 : spec.legendTopLeft ? left + 8 : left + pw - lw - 8;
+        const double ly = spec.legendBottomRight && !spec.legendOutside ? top + ph - lh - 8 : top + 8;
         o << "<rect x='" << lx << "' y='" << ly << "' width='" << lw << "' height='" << lh
           << "' fill='#fcfcfb' fill-opacity='0.92' stroke='#e6e5e0' rx='4'/>\n";
         for (std::size_t i = 0; i < spec.series.size(); ++i) {

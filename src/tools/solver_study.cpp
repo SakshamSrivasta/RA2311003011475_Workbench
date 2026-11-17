@@ -6,6 +6,10 @@
 //       (`wb_solvers --one ...`), so its peak memory and timings are its own.
 //   wb_solvers --one <geometry> <param> <solver> <omega> [history.csv]
 //       Runs one configuration and prints one "ROW k=v;..." line.
+//   wb_solvers --replace <outdir> <geometry> <param> <solver> <note>
+//       Re-runs one configuration alone and swaps its row (original kept).
+//   wb_solvers --replot <outdir>
+//       Redraws the figures from solver_runs.csv.
 //
 // Geometries: cube (param = cells per side; manufactured solution, so the
 // discretisation error is known), hsA / hsB (param = grid spacing in mm; the
@@ -416,6 +420,59 @@ std::string geometryTitle(const std::string& g) {
     return "Heat sink B (thermal pad + copper spreader)";
 }
 
+const std::vector<std::string> kColumns = {
+    "geometry", "param", "solver", "status", "n", "nnz", "omega", "iterations", "reps", "assembly_s", "setup_s", "solve_s",
+    "total_s", "rel_residual", "max_abs_diff_vs_reference_C", "err_rms_C", "err_max_nodal_C", "T_max_C", "bytes_allocated",
+    "matrix_bytes", "peak_rss_bytes", "profile", "half_bandwidth", "natural_half_bandwidth", "planned_flops", "planned_bytes",
+    "kappa_est", "lambda_min", "lambda_max", "ic_shift", "ic_min_pivot_ratio", "residual_replacements", "note", "detail"};
+
+void writeRunTable(const fs::path& dir, const std::vector<Row>& rows) {
+    io::CsvWriter table(kColumns);
+    table.comment("Round 2 solver study. One row per (geometry, level, solver); each row ran in its own process. See machine.txt.");
+    table.comment("param: cells per side (cube) or grid spacing in mm (hsA, hsB). Times in seconds, memory in bytes.");
+    table.comment("note: set on rows that were re-run on their own; the original rows are kept in solver_runs_replaced.csv.");
+    for (const auto& r : rows) {
+        std::vector<std::string> cells;
+        for (const auto& c : kColumns) cells.push_back(gets(r, c));
+        table.writeRow(cells);
+    }
+    io::writeTextFileAtomic((dir / "solver_runs.csv").string(), table.str());
+}
+
+std::vector<Row> readRunTable(const fs::path& path) {
+    std::stringstream ss(io::readTextFile(path.string(), {512u << 20, 10'000'000}));
+    std::string line;
+    std::vector<std::string> header;
+    std::vector<Row> rows;
+    const auto split = [](const std::string& l) {
+        std::vector<std::string> out;
+        std::string cell;
+        bool quoted = false;
+        for (char ch : l) {
+            if (ch == '"') quoted = !quoted;
+            else if (ch == ',' && !quoted) {
+                out.push_back(cell);
+                cell.clear();
+            } else cell += ch;
+        }
+        out.push_back(cell);
+        return out;
+    };
+    while (std::getline(ss, line)) {
+        if (!line.empty() && line.back() == '\r') line.pop_back();
+        if (line.empty() || line[0] == '#') continue;
+        const auto cells = split(line);
+        if (header.empty()) {
+            header = cells;
+            continue;
+        }
+        Row r;
+        for (std::size_t i = 0; i < header.size() && i < cells.size(); ++i) r[header[i]] = cells[i];
+        rows.push_back(r);
+    }
+    return rows;
+}
+
 // ---- figures from the run table -------------------------------------------
 
 void scalingFigures(const fs::path& dir, const std::vector<Row>& rows, const std::string& g) {
@@ -433,7 +490,7 @@ void scalingFigures(const fs::path& dir, const std::vector<Row>& rows, const std
     mem.yLabel = "bytes";
     its = time;
     its.title = geometryTitle(g) + ": iterations to 1e-8";
-    its.subtitle = "Sweeps for Jacobi / Gauss-Seidel / SOR, iterations for CG. Slopes from a log-log fit.";
+    its.subtitle = "Sweeps (Jacobi, Gauss-Seidel, SOR) or iterations (CG). Log-log slopes; theory: GS 2/3, CG and SOR 1/3.";
     its.yLabel = "iterations";
 
     // Flop rate of the skyline factorisation, from the largest completed run.
@@ -471,9 +528,12 @@ void scalingFigures(const fs::path& dir, const std::vector<Row>& rows, const std
             s->color = color;
             s->markers = true;
         }
-        st.label = label + "  (slope " + fmt2(slopeLogLog(st.x, st.y)) + ")";
-        sm.label = label + "  (slope " + fmt2(slopeLogLog(sm.x, sm.y)) + ")";
-        si.label = label + "  (slope " + fmt2(slopeLogLog(si.x, si.y)) + ")";
+        const auto withSlope = [&](const Series& s) {
+            return s.x.size() < 2 ? label + "  (1 point)" : label + "  (slope " + fmt2(slopeLogLog(s.x, s.y)) + ")";
+        };
+        st.label = withSlope(st);
+        sm.label = withSlope(sm);
+        si.label = withSlope(si);
         time.series.push_back(st);
         mem.series.push_back(sm);
         if (!si.x.empty()) its.series.push_back(si);
@@ -492,7 +552,12 @@ void scalingFigures(const fs::path& dir, const std::vector<Row>& rows, const std
             mem.series.push_back(pm);
         }
     }
-    time.legendTopLeft = mem.legendTopLeft = its.legendTopLeft = true;
+    time.legendOutside = mem.legendOutside = its.legendOutside = true;
+    time.width = mem.width = its.width = 1000;
+    if (g == "cube") {
+        const std::string same = " CG and PCG + Jacobi coincide: the cube's diagonal is constant.";
+        its.subtitle += same;
+    }
     time.height = mem.height = its.height = 520;
     writeSvg(dir / ("time_vs_n_" + g + ".svg"), tools::renderSvg(time));
     writeSvg(dir / ("memory_vs_n_" + g + ".svg"), tools::renderSvg(mem));
@@ -858,6 +923,48 @@ void icRobustnessExperiment(const fs::path& dir) {
     io::writeTextFileAtomic((dir / "ic0_robustness.csv").string(), csv.str());
 }
 
+
+void tableFigures(const fs::path& dir, const std::vector<Row>& rows, bool quick) {
+    for (const std::string g : {"cube", "hsA", "hsB"}) scalingFigures(dir, rows, g);
+    historyFigure(dir, "cube", quick ? 16 : 32, kSolverOrder, "Convergence on the unit cube");
+    historyFigure(dir, "hsB", quick ? 2 : 1, kSolverOrder, "Convergence on heat sink B (pad + copper)");
+    historyFigure(dir, "hsA", quick ? 2 : 1, kSolverOrder, "Convergence on heat sink A (aluminium)");
+}
+
+// Re-runs one configuration on its own and swaps its row in the table,
+// keeping the original row in solver_runs_replaced.csv.
+int replaceRow(const std::string& self, const fs::path& dir, const std::string& geometry, double param,
+               const std::string& solver, const std::string& note) {
+    auto rows = readRunTable(dir / "solver_runs.csv");
+    const fs::path keptPath = dir / "solver_runs_replaced.csv";
+    std::vector<Row> kept = fs::exists(keptPath) ? readRunTable(keptPath) : std::vector<Row>{};
+    for (auto& r : rows) {
+        if (gets(r, "geometry") != geometry || std::abs(getd(r, "param") - param) > 1e-12 || gets(r, "solver") != solver) continue;
+        const fs::path scratch = dir / ".tmp";
+        fs::create_directories(scratch);
+        const Row fresh = spawn(self, scratch, geometry, param, solver, getd(r, "omega", 1.0), "");
+        fs::remove_all(scratch);
+        std::cerr << "old: " << gets(r, "status") << " t=" << gets(r, "total_s") << "  new: " << gets(fresh, "status")
+                  << " t=" << gets(fresh, "total_s") << " it=" << gets(fresh, "iterations") << '\n';
+        kept.push_back(r);
+        r = fresh;
+        r["note"] = note;
+        writeRunTable(dir, rows);
+        io::CsvWriter old(kColumns);
+        old.comment("Original rows that were replaced in solver_runs.csv by a re-run; see the note column there.");
+        for (const auto& k : kept) {
+            std::vector<std::string> cells;
+            for (const auto& c : kColumns) cells.push_back(gets(k, c));
+            old.writeRow(cells);
+        }
+        io::writeTextFileAtomic(keptPath.string(), old.str());
+        tableFigures(dir, rows, false);
+        return 0;
+    }
+    std::cerr << "no such row\n";
+    return 1;
+}
+
 int runStudy(const std::string& self, const fs::path& dir, bool quick) {
     fs::create_directories(dir / "residual_histories");
     const fs::path scratch = dir / ".tmp";
@@ -952,26 +1059,10 @@ int runStudy(const std::string& self, const fs::path& dir, bool quick) {
             }
         }
     }
-    const std::vector<std::string> cols = {
-        "geometry", "param", "solver", "status", "n", "nnz", "omega", "iterations", "reps", "assembly_s", "setup_s", "solve_s",
-        "total_s", "rel_residual", "max_abs_diff_vs_reference_C", "err_rms_C", "err_max_nodal_C", "T_max_C", "bytes_allocated",
-        "matrix_bytes", "peak_rss_bytes", "profile", "half_bandwidth", "natural_half_bandwidth", "planned_flops", "planned_bytes",
-        "kappa_est", "lambda_min", "lambda_max", "ic_shift", "ic_min_pivot_ratio", "residual_replacements", "detail"};
-    io::CsvWriter table(cols);
-    table.comment("Round 2 solver study. One row per (geometry, level, solver); each row ran in its own process. See machine.txt.");
-    table.comment("param: cells per side (cube) or grid spacing in mm (hsA, hsB). Times in seconds, memory in bytes.");
-    for (const auto& r : rows) {
-        std::vector<std::string> cells;
-        for (const auto& c : cols) cells.push_back(gets(r, c));
-        table.writeRow(cells);
-    }
-    io::writeTextFileAtomic((dir / "solver_runs.csv").string(), table.str());
+    writeRunTable(dir, rows);
 
     // 3. Figures from the table.
-    for (const std::string g : {"cube", "hsA", "hsB"}) scalingFigures(dir, rows, g);
-    historyFigure(dir, "cube", quick ? 16 : 32, kSolverOrder, "Convergence on the unit cube");
-    historyFigure(dir, "hsB", quick ? 2 : 1, kSolverOrder, "Convergence on heat sink B (pad + copper)");
-    historyFigure(dir, "hsA", quick ? 2 : 1, kSolverOrder, "Convergence on heat sink A (aluminium)");
+    tableFigures(dir, rows, quick);
 
     // 4. Single-purpose experiments.
     std::cerr << "experiments: drift, penalty, SOR range, IC(0) robustness, spy, pictures\n";
@@ -992,6 +1083,13 @@ int main(int argc, char** argv) {
     try {
         if (argc >= 6 && std::string(argv[1]) == "--one") {
             return runOne(argv[2], std::stod(argv[3]), argv[4], std::stod(argv[5]), argc >= 7 ? argv[6] : "");
+        }
+        if (argc >= 3 && std::string(argv[1]) == "--replot") {
+            tableFigures(argv[2], readRunTable(fs::path(argv[2]) / "solver_runs.csv"), false);
+            return 0;
+        }
+        if (argc >= 7 && std::string(argv[1]) == "--replace") {
+            return replaceRow(fs::absolute(argv[0]).string(), argv[2], argv[3], std::stod(argv[4]), argv[5], argv[6]);
         }
         if (argc >= 2 && argv[1][0] != '-') {
             const bool quick = argc >= 3 && std::string(argv[2]) == "--quick";

@@ -45,6 +45,8 @@ public:
 
 private:
     static std::string cell(double v) { return formatNumber(v); }
+    static std::string cell(const std::string& v) { return quoted(v); }
+    static std::string cell(const char* v) { return quoted(v); }
     template <typename T>
     static const T& cell(const T& v) { return v; }
 
@@ -55,8 +57,20 @@ private:
     }
 
     void writeCells(const std::vector<std::string>& cells) {
-        for (std::size_t i = 0; i < cells.size(); ++i) out_ << (i ? "," : "") << cells[i];
+        for (std::size_t i = 0; i < cells.size(); ++i) out_ << (i ? "," : "") << quoted(cells[i]);
         out_ << '\n';
+    }
+
+    // RFC 4180: a cell with a comma, quote or line break is wrapped in quotes,
+    // with inner quotes doubled. Plain cells are written as they are.
+    static std::string quoted(const std::string& cell) {
+        if (cell.find_first_of(",\"\r\n") == std::string::npos) return cell;
+        std::string out = "\"";
+        for (char c : cell) {
+            if (c == '"') out += '"';
+            out += c;
+        }
+        return out + '"';
     }
 
     std::vector<std::string> header_;

@@ -1,0 +1,117 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='520' viewBox='0 0 1000 520' font-family='Segoe UI, Helvetica, Arial, sans-serif'>
+<rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='78' y='26' font-size='17' font-weight='600' fill='#0b0b0b'>Unit cube, manufactured solution: memory beyond the matrix</text>
+<text x='78' y='46' font-size='12.5' fill='#52514e'>Work vectors, preconditioner and factor (counted). Dashed: predicted factor size of refused skyline runs.</text>
+<line x1='78' x2='78' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='78' y='476' font-size='12' fill='#52514e' text-anchor='middle'>100</text>
+<line x1='191.24' x2='191.24' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='191.24' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1000</text>
+<line x1='304.48' x2='304.48' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='304.48' y='476' font-size='12' fill='#52514e' text-anchor='middle'>10000</text>
+<line x1='417.72' x2='417.72' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='417.72' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1e+05</text>
+<line x1='530.96' x2='530.96' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='530.96' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1e+06</text>
+<line x1='644.2' x2='644.2' y1='70' y2='458' stroke='#e6e5e0' stroke-width='1'/>
+<text x='644.2' y='476' font-size='12' fill='#52514e' text-anchor='middle'>1e+07</text>
+<line x1='78' x2='644.2' y1='414.889' y2='414.889' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='418.889' font-size='12' fill='#52514e' text-anchor='end'>10000</text>
+<line x1='78' x2='644.2' y1='328.667' y2='328.667' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='332.667' font-size='12' fill='#52514e' text-anchor='end'>1e+06</text>
+<line x1='78' x2='644.2' y1='242.444' y2='242.444' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='246.444' font-size='12' fill='#52514e' text-anchor='end'>1e+08</text>
+<line x1='78' x2='644.2' y1='156.222' y2='156.222' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='160.222' font-size='12' fill='#52514e' text-anchor='end'>1e+10</text>
+<line x1='78' x2='644.2' y1='70' y2='70' stroke='#e6e5e0' stroke-width='1'/>
+<text x='70' y='74' font-size='12' fill='#52514e' text-anchor='end'>1e+12</text>
+<line x1='78' x2='644.2' y1='458' y2='458' stroke='#8a8984' stroke-width='1'/>
+<text x='361.1' y='502' font-size='13' fill='#0b0b0b' text-anchor='middle'>unknowns n</text>
+<text transform='translate(18,264) rotate(-90)' font-size='13' fill='#0b0b0b' text-anchor='middle'>bytes</text>
+<polyline fill='none' stroke='#2a78d6' stroke-width='2' stroke-linejoin='round' points='138.617,361.013 251.062,287.616 314.126,246.49 358.165,217.934 419.565,178.331 '/>
+<circle cx='138.617' cy='361.013' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='251.062' cy='287.616' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='314.126' cy='246.49' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='358.165' cy='217.934' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='419.565' cy='178.331' r='4.5' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#2a78d6' stroke-width='2' stroke-linejoin='round' stroke-dasharray='6 4' points='419.565,178.331 462.792,150.579 523.392,111.784 566.224,84.4331 '/>
+<polyline fill='none' stroke='#e34948' stroke-width='2' stroke-linejoin='round' points='138.617,364.12 251.062,294.4 314.126,254.662 358.165,226.813 '/>
+<circle cx='138.617' cy='364.12' r='4.5' fill='#e34948' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='251.062' cy='294.4' r='4.5' fill='#e34948' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='314.126' cy='254.662' r='4.5' fill='#e34948' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='358.165' cy='226.813' r='4.5' fill='#e34948' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#6250d6' stroke-width='2' stroke-linejoin='round' points='138.617,418.532 251.062,375.723 314.126,351.714 358.165,334.948 '/>
+<circle cx='138.617' cy='418.532' r='4.5' fill='#6250d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='251.062' cy='375.723' r='4.5' fill='#6250d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='314.126' cy='351.714' r='4.5' fill='#6250d6' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='358.165' cy='334.948' r='4.5' fill='#6250d6' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#eb6834' stroke-width='2' stroke-linejoin='round' points='138.617,426.123 251.062,383.315 314.126,359.306 358.165,342.54 419.565,319.164 462.792,302.708 '/>
+<circle cx='138.617' cy='426.123' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='251.062' cy='383.315' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='314.126' cy='359.306' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='358.165' cy='342.54' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='419.565' cy='319.164' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='462.792' cy='302.708' r='4.5' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#1baf7a' stroke-width='2' stroke-linejoin='round' points='138.617,426.123 251.062,383.315 314.126,359.306 358.165,342.54 419.565,319.164 462.792,302.708 523.392,279.637 566.224,263.33 '/>
+<circle cx='138.617' cy='426.123' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='251.062' cy='383.315' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='314.126' cy='359.306' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='358.165' cy='342.54' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='419.565' cy='319.164' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='462.792' cy='302.708' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='523.392' cy='279.637' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='566.224' cy='263.33' r='4.5' fill='#1baf7a' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#eda100' stroke-width='2' stroke-linejoin='round' points='138.617,413.145 251.062,370.337 314.126,346.328 358.165,329.562 419.565,306.187 462.792,289.73 523.392,266.659 566.224,250.353 '/>
+<circle cx='138.617' cy='413.145' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='251.062' cy='370.337' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='314.126' cy='346.328' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='358.165' cy='329.562' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='419.565' cy='306.187' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='462.792' cy='289.73' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='523.392' cy='266.659' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='566.224' cy='250.353' r='4.5' fill='#eda100' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#e87ba4' stroke-width='2' stroke-linejoin='round' points='138.617,405.554 251.062,362.745 314.126,338.736 358.165,321.97 419.565,298.595 462.792,282.138 523.392,259.068 566.224,242.761 '/>
+<circle cx='138.617' cy='405.554' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='251.062' cy='362.745' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='314.126' cy='338.736' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='358.165' cy='321.97' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='419.565' cy='298.595' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='462.792' cy='282.138' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='523.392' cy='259.068' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='566.224' cy='242.761' r='4.5' fill='#e87ba4' stroke='#fcfcfb' stroke-width='2'/>
+<polyline fill='none' stroke='#008300' stroke-width='2' stroke-linejoin='round' points='138.617,381.441 251.062,336.466 314.126,311.801 358.165,294.718 419.565,271.033 462.792,254.424 523.392,231.203 566.224,214.822 '/>
+<circle cx='138.617' cy='381.441' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='251.062' cy='336.466' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='314.126' cy='311.801' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='358.165' cy='294.718' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='419.565' cy='271.033' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='462.792' cy='254.424' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='523.392' cy='231.203' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='566.224' cy='214.822' r='4.5' fill='#008300' stroke='#fcfcfb' stroke-width='2'/>
+<rect x='660.2' y='78' width='323.8' height='190' fill='#fcfcfb' fill-opacity='0.92' stroke='#e6e5e0' rx='4'/>
+<line x1='668.2' x2='690.2' y1='92' y2='92' stroke='#2a78d6' stroke-width='2'/>
+<circle cx='679.2' cy='92' r='4' fill='#2a78d6'/>
+<text x='696.2' y='96' font-size='12' fill='#0b0b0b'>Skyline Cholesky (RCM)  (slope 1.71)</text>
+<line x1='668.2' x2='690.2' y1='112' y2='112' stroke='#2a78d6' stroke-width='2' stroke-dasharray='6 4'/>
+<text x='696.2' y='116' font-size='12' fill='#0b0b0b'>Skyline Cholesky (RCM) (predicted, refused)</text>
+<line x1='668.2' x2='690.2' y1='132' y2='132' stroke='#e34948' stroke-width='2'/>
+<circle cx='679.2' cy='132' r='4' fill='#e34948'/>
+<text x='696.2' y='136' font-size='12' fill='#0b0b0b'>Skyline Cholesky (natural)  (slope 1.64)</text>
+<line x1='668.2' x2='690.2' y1='152' y2='152' stroke='#6250d6' stroke-width='2'/>
+<circle cx='679.2' cy='152' r='4' fill='#6250d6'/>
+<text x='696.2' y='156' font-size='12' fill='#0b0b0b'>Jacobi  (slope 1.00)</text>
+<line x1='668.2' x2='690.2' y1='172' y2='172' stroke='#eb6834' stroke-width='2'/>
+<circle cx='679.2' cy='172' r='4' fill='#eb6834'/>
+<text x='696.2' y='176' font-size='12' fill='#0b0b0b'>Gauss-Seidel  (slope 1.00)</text>
+<line x1='668.2' x2='690.2' y1='192' y2='192' stroke='#1baf7a' stroke-width='2'/>
+<circle cx='679.2' cy='192' r='4' fill='#1baf7a'/>
+<text x='696.2' y='196' font-size='12' fill='#0b0b0b'>SOR (fitted omega)  (slope 1.00)</text>
+<line x1='668.2' x2='690.2' y1='212' y2='212' stroke='#eda100' stroke-width='2'/>
+<circle cx='679.2' cy='212' r='4' fill='#eda100'/>
+<text x='696.2' y='216' font-size='12' fill='#0b0b0b'>CG  (slope 1.00)</text>
+<line x1='668.2' x2='690.2' y1='232' y2='232' stroke='#e87ba4' stroke-width='2'/>
+<circle cx='679.2' cy='232' r='4' fill='#e87ba4'/>
+<text x='696.2' y='236' font-size='12' fill='#0b0b0b'>PCG + Jacobi  (slope 1.00)</text>
+<line x1='668.2' x2='690.2' y1='252' y2='252' stroke='#008300' stroke-width='2'/>
+<circle cx='679.2' cy='252' r='4' fill='#008300'/>
+<text x='696.2' y='256' font-size='12' fill='#0b0b0b'>PCG + IC(0)  (slope 1.02)</text>
+</svg>
