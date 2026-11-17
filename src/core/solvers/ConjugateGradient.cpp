@@ -60,6 +60,7 @@ std::size_t IncompleteCholesky::bytes() const {
 
 bool IncompleteCholesky::factorise(const sparse::CsrMatrix& A, double alpha) {
     const std::size_t n = A.rows();
+    minPivotRatio_ = 1.0;
     rowPtr_.assign(n + 1, 0);
     col_.clear();
     val_.clear();
@@ -105,6 +106,7 @@ bool IncompleteCholesky::factorise(const sparse::CsrMatrix& A, double alpha) {
                        (alpha > 0.0 ? " with shift " + std::to_string(alpha) : std::string(" without a shift"));
             return false;
         }
+        minPivotRatio_ = std::min(minPivotRatio_, d / val_[re]);
         val_[re] = std::sqrt(d);
     }
     return true;

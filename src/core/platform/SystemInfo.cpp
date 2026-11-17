@@ -12,12 +12,15 @@
 #    define WIN32_LEAN_AND_MEAN
 #  endif
 #  include <windows.h>
+#  include <psapi.h>
 #elif defined(__APPLE__)
+#  include <sys/resource.h>
 #  include <sys/sysctl.h>
 #  include <sys/types.h>
 #elif defined(__linux__)
 #  include <fstream>
 #  include <set>
+#  include <sys/resource.h>
 #  include <unistd.h>
 #endif
 
@@ -148,6 +151,24 @@ SystemInfo querySystemInfo() {
     info.buildFlags = WB_BUILD_FLAGS;
     fillPlatform(info);
     return info;
+}
+
+std::uint64_t peakResidentBytes() {
+#if defined(_WIN32)
+    PROCESS_MEMORY_COUNTERS counters{};
+    if (K32GetProcessMemoryInfo(GetCurrentProcess(), &counters, sizeof(counters))) return counters.PeakWorkingSetSize;
+    return 0;
+#elif defined(__APPLE__) || defined(__linux__)
+    rusage usage{};
+    if (getrusage(RUSAGE_SELF, &usage) != 0) return 0;
+#  if defined(__APPLE__)
+    return static_cast<std::uint64_t>(usage.ru_maxrss);  // bytes on macOS
+#  else
+    return static_cast<std::uint64_t>(usage.ru_maxrss) * 1024;  // kilobytes on Linux
+#  endif
+#else
+    return 0;
+#endif
 }
 
 }  // namespace wb::platform

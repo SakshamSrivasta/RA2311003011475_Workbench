@@ -21,4 +21,9 @@ struct SystemInfo {
 
 SystemInfo querySystemInfo();
 
+// Highest resident memory of this process so far, in bytes (0 if unknown).
+// The solver study runs each configuration in a fresh process so this is a
+// clean per-configuration peak.
+std::uint64_t peakResidentBytes();
+
 }  // namespace wb::platform

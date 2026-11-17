@@ -125,6 +125,8 @@ add_executable(wb_make_sample_data src/tools/make_sample_data.cpp)
 target_link_libraries(wb_make_sample_data PRIVATE wb_core wb_options)
 add_executable(wb_results src/tools/generate_results.cpp)
 target_link_libraries(wb_results PRIVATE wb_core wb_options)
+add_executable(wb_solvers src/tools/solver_study.cpp)
+target_link_libraries(wb_solvers PRIVATE wb_core wb_options)
 
 # ---------------------------------------------------------------------------
 # Unit tests: one executable, run through CTest.

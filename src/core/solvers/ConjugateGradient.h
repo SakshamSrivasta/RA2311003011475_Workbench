@@ -61,6 +61,9 @@ public:
     double shift() const { return shift_; }        // alpha used, 0 if none was needed
     int attempts() const { return attempts_; }     // factorisations tried
     const std::string& failure() const { return failure_; }
+    // min over rows of L_ii^2 / a_ii: 1 means nothing was subtracted, 0 is
+    // breakdown. How close the factorisation came to failing.
+    double minPivotRatio() const { return minPivotRatio_; }
     void apply(const std::vector<double>& r, std::vector<double>& z) const override;
     std::size_t bytes() const override;
     std::string name() const override { return "ic0"; }
@@ -74,6 +77,7 @@ private:
     bool ok_ = false;
     double shift_ = 0.0;
     int attempts_ = 0;
+    double minPivotRatio_ = 1.0;
     std::string failure_;
 };
 
