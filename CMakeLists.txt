@@ -62,6 +62,18 @@ add_library(wb_core STATIC
     src/core/hardware/MockAdapters.cpp
     src/core/hardware/DeviceManager.cpp
     src/core/report/Exports.cpp
+    # Round 2: 3D conduction and the solver study
+    src/core/mesh/Grid3D.cpp
+    src/core/mesh/BoxGeometry.cpp
+    src/core/mesh/HexMesh.cpp
+    src/core/sparse/CsrMatrix.cpp
+    src/core/fem3d/HexElement.cpp
+    src/core/fem3d/ThermalProblem3D.cpp
+    src/core/fem3d/Assembler.cpp
+    src/core/fem3d/Postprocess.cpp
+    src/core/fem3d/Manufactured.cpp
+    src/core/fem3d/Cases.cpp
+    src/core/solvers/ConjugateGradient.cpp
 )
 target_include_directories(wb_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(wb_core PUBLIC Threads::Threads PRIVATE wb_options)
@@ -123,6 +135,9 @@ if(WB_BUILD_TESTS)
         tests/test_batch.cpp
         tests/test_io.cpp
         tests/test_hardware.cpp
+        tests/test_mesh.cpp
+        tests/test_fem3d.cpp
+        tests/test_solvers.cpp
     )
     target_link_libraries(wb_tests PRIVATE wb_core wb_options)
     add_test(NAME wb_tests COMMAND wb_tests)
