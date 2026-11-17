@@ -73,7 +73,10 @@ add_library(wb_core STATIC
     src/core/fem3d/Postprocess.cpp
     src/core/fem3d/Manufactured.cpp
     src/core/fem3d/Cases.cpp
+    src/core/sparse/Ordering.cpp
     src/core/solvers/ConjugateGradient.cpp
+    src/core/solvers/SkylineCholesky.cpp
+    src/core/solvers/Stationary.cpp
 )
 target_include_directories(wb_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(wb_core PUBLIC Threads::Threads PRIVATE wb_options)
