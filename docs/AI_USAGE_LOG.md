@@ -43,6 +43,30 @@ Each of these was produced by the assistant and caught during the session by a t
 
 **A near-miss worth recording (not a code bug).** In an API test, cancelling a running benchmark seemed to do nothing: the cancel call took 5 s and the job finished normally. Before changing any code, the assistant ran the JobManager in isolation (it cancelled correctly at case 124/1000), then repeated the HTTP call from Python (it cancelled within 0.2 s). The cause was the test command: `curl -X POST` with no body sends no `Content-Length`, so the server waited 5 s for a body. The browser always sends one. No code was changed. Changing the code would have "fixed" a bug that did not exist.
 
+## 3b. Round 2 (solver extension, November 2026)
+
+**Tools:** Claude Code (VS Code extension), models Claude Fable 5.1 (blueprint, mesh and assembly) and Claude Opus 5.5 (solvers, study, report).
+
+**Prompts, summarised.**
+- The candidate attached the extension notice and a detailed brief: three solvers from scratch, a more complex geometry, deep internals, and a PDF report only.
+- The candidate asked for an architecture blueprint first and confirmed it, adding one change: IC(0) mandatory, not optional.
+- The candidate then asked to proceed day by day: mesh and assembly, then the solvers and benchmarks, then renders and the report.
+
+**Output.** 3D hex mesh and assembly, the three solvers, 43 new tests, the `wb_solvers` study tool, `results/round2/` and `docs/round2/REPORT_ROUND2.md`.
+
+**Incorrect or unsuitable output caught in Round 2:**
+
+| # | What the AI produced or predicted | How it was caught | Fix / lesson |
+|---|---|---|---|
+| R1 | A blueprint prediction that IC(0) would break down on stretched cells | 36 probe configurations (aspect ratio up to 64, contrast up to 10⁶, three orderings): no breakdown, smallest pivot ratio 0.44 | Reported as "predicted, not found", with the margin measured. The shift path is tested on a constructed counter-example instead |
+| R2 | CG that checked the true residual but kept iterating on a drifted recursive residual | A test on heat sink B at 1e-12 broke down after 10 230 iterations | Residual replacement: converges in 440 iterations. A drift figure was added |
+| R3 | A boundary-region tagging bug: the chip edge did not fall on a grid line, so the chip flux was 43.6 W instead of 50 W | Heat-balance and area unit tests | Region bounds are now grid keys |
+| R4 | A penalty-method chart whose κ came from a one-iteration CG run, κ = 1 | Visual check of the chart against theory (κ should grow with P) | Separate 300-step Lanczos run. The one-iteration "convergence" is itself reported as the pitfall |
+| R5 | A test expecting a random renumbering to give ≥ 10× the profile | The test failed: 5× was measured | Threshold based on the measurement |
+| R6 | Three benchmark timings inflated by swapping, nearly passed off as results | Cost per unknown per iteration jumped 7× and the direct flop rate halved, against a constant everywhere else | Re-run on their own; originals kept in `solver_runs_replaced.csv` |
+| R7 | A CSV writer, also used in Round 1, that did not quote commas | A text field broke the column count | RFC 4180 quoting |
+| R8 | Several report sentences that went beyond the data (direct-solver residual "≈1e-15", "most of the temperature drop is across the pad", wrong section references) | Every number was re-checked against the CSVs before the PDF was built | Corrected |
+
 ## 4. Candidate's own edits and review *(to be completed by the candidate)*
 
 List what you changed by hand after the AI output, and what you checked yourself. Examples of useful entries: a function you rewrote, a value you recomputed on paper, a UI behaviour you tested on Windows, something you rejected.

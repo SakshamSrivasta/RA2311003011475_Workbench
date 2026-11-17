@@ -10,6 +10,8 @@
 //       Re-runs one configuration alone and swaps its row (original kept).
 //   wb_solvers --replot <outdir>
 //       Redraws the figures from solver_runs.csv.
+//   wb_solvers --pictures <outdir>
+//       Re-solves the 1 mm heat sinks and rewrites the slices and exports.
 //
 // Geometries: cube (param = cells per side; manufactured solution, so the
 // discretisation error is known), hsA / hsB (param = grid spacing in mm; the
@@ -680,6 +682,21 @@ void heatSinkPictures(const fs::path& dir, bool contrast, double spacing_mm) {
     }
     io::writeTextFileAtomic((dir / ("heatsink_" + g + "_nodal.csv")).string(), csv.str());
 
+    // Surface nodes only: what the eye sees, without interior nodes showing
+    // through the translucent mesh. Used for the 3D renders in the report.
+    std::vector<char> onSurface(m.nodeCount(), 0);
+    for (const auto& f : m.faces)
+        for (std::size_t node : f.nodes) onSurface[node] = 1;
+    io::CsvWriter surf({"node_id", "x_m", "y_m", "z_m", "temperature_C"});
+    surf.comment(std::string("COMPUTED by wb_solvers, heat sink ") + (contrast ? "B" : "A") +
+                 ": boundary-surface nodes only (same ids as the full file). Not an ANSYS export.");
+    for (std::size_t i = 0; i < m.nodeCount(); ++i) {
+        if (!onSurface[i]) continue;
+        const auto p = m.nodePosition(i);
+        surf.row(static_cast<double>(i + 1), p[0], p[1], p[2], T[i]);
+    }
+    io::writeTextFileAtomic((dir / ("heatsink_" + g + "_surface_nodal.csv")).string(), surf.str());
+
     std::ostringstream stl;
     stl << "solid heatsink_" << g << "_surface_m\n";
     for (const auto& f : m.faces) {
@@ -924,7 +941,55 @@ void icRobustnessExperiment(const fs::path& dir) {
 }
 
 
+// Measured condition number (Lanczos, from plain CG) against two closed forms:
+//   cube (Dirichlet on all faces):  lambda_max = 4 k h, lambda_min = 3 pi^2 k h^3
+//                                   -> kappa = 4 / (3 pi^2 h^2)
+//   heat sink (convection only):    lambda_min ~ h_c A_s / n  (the near-uniform mode),
+//                                   lambda_max ~ 4 k_max h    -> kappa ~ 4 k_max h n / (h_c A_s)
+void conditionFigure(const fs::path& dir, const std::vector<Row>& rows) {
+    tools::PlotSpec p;
+    p.title = "Condition number: measured vs predicted";
+    p.subtitle = "Dots: Lanczos estimate from plain CG. Dashed: closed-form prediction (cube: Dirichlet; heat sink: convection only).";
+    p.xLabel = "unknowns n";
+    p.yLabel = "condition number of A";
+    p.logX = p.logY = true;
+    p.legendOutside = true;
+    p.width = 1000;
+    constexpr double kPi = 3.14159265358979323846;
+    const double surfaceArea = 0.016, hConv = fem3d::heatsink::kConvection_W_m2K;
+    const std::map<std::string, std::string> color = {{"cube", "#2a78d6"}, {"hsA", "#eb6834"}, {"hsB", "#1baf7a"}};
+    for (const std::string g : {"cube", "hsA", "hsB"}) {
+        tools::Series meas, pred;
+        for (const auto& r : rows) {
+            if (gets(r, "geometry") != g || gets(r, "solver") != "cg" || gets(r, "kappa_est").empty()) continue;
+            const double n = getd(r, "n"), param = getd(r, "param");
+            meas.x.push_back(n);
+            meas.y.push_back(getd(r, "kappa_est"));
+            pred.x.push_back(n);
+            if (g == "cube") {
+                const double h = 1.0 / param;
+                pred.y.push_back(4.0 / (3.0 * kPi * kPi * h * h));
+            } else {
+                const double kMax = g == "hsA" ? fem3d::heatsink::kAluminium_W_mK : fem3d::heatsink::kCopper_W_mK;
+                pred.y.push_back(4.0 * kMax * param * 1e-3 * n / (hConv * surfaceArea));
+            }
+        }
+        if (meas.x.empty()) continue;
+        const std::string name = g == "cube" ? "cube" : g == "hsA" ? "heat sink A" : "heat sink B";
+        meas.label = name + " (measured)";
+        meas.color = pred.color = color.at(g);
+        meas.markers = true;
+        meas.line = false;
+        pred.label = name + " (predicted)";
+        pred.dashed = true;
+        p.series.push_back(meas);
+        p.series.push_back(pred);
+    }
+    writeSvg(dir / "condition_number_vs_n.svg", tools::renderSvg(p));
+}
+
 void tableFigures(const fs::path& dir, const std::vector<Row>& rows, bool quick) {
+    conditionFigure(dir, rows);
     for (const std::string g : {"cube", "hsA", "hsB"}) scalingFigures(dir, rows, g);
     historyFigure(dir, "cube", quick ? 16 : 32, kSolverOrder, "Convergence on the unit cube");
     historyFigure(dir, "hsB", quick ? 2 : 1, kSolverOrder, "Convergence on heat sink B (pad + copper)");
@@ -1083,6 +1148,11 @@ int main(int argc, char** argv) {
     try {
         if (argc >= 6 && std::string(argv[1]) == "--one") {
             return runOne(argv[2], std::stod(argv[3]), argv[4], std::stod(argv[5]), argc >= 7 ? argv[6] : "");
+        }
+        if (argc >= 3 && std::string(argv[1]) == "--pictures") {
+            heatSinkPictures(argv[2], false, 1.0);
+            heatSinkPictures(argv[2], true, 1.0);
+            return 0;
         }
         if (argc >= 3 && std::string(argv[1]) == "--replot") {
             tableFigures(argv[2], readRunTable(fs::path(argv[2]) / "solver_runs.csv"), false);
